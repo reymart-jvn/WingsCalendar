@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "shuttlewiser",
+  "private_key_id": "5ce581cceec5196a45aeecc5854e50fe401dd918",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC91AXQyvou4Z3D\naFCx8X07/xfAGNn8PxWtIaAT5tZ6QKmyLOjMHDdsyVqg8fl4PCGLjLgeynueuGTC\nye2g2efVDpzpz582JUW9S/KGlFhP7TaIW+ZEJ4iBRjgS9TZWv9KICAPHrKjD/j6Z\nYB9t4ctvDpGI65gIY/skmyDRGu/DC7IvG45fl7ITuptmx6M6k1L4IIDaJCSAX9wo\nF9S565OmNSc0tlZ5BOWyBoH27Q1s+to/G8f1YvCCVK6tQ4ZGigpfhG+AG2GjDQU6\nN9yqIm6DqvuQJe83IDNBJSXStuHN9hJus2+2b+Q4RZxTHcgs7JzmobaBVKMbHRan\nucz98+xVAgMBAAECggEAEaX9qGzGl8c4EKvJHNITz5kmzyBAW/hNfpwqss76T8Fl\nRYBxYFCbQozx1RbKF8iXYc8CazJuDdKc45M8eYDo0eEa6433AmSyuCewc5ylHUEz\nmbfZj6qRQVuS6QhNNgF9hFIib9T4l8gyb7YFFgUxEbEsDKvCpb0N41hc07QKaHqr\n5eBt44INHSe0PR22xTj9Lf4xydalPoFuIbwET9bTaFcNW7iCGS2brYWjiQtZnyyf\nckimo6WHWT4+xq/uX66KAo7rBuVZJZzgYWdk7izqcb2i5QdTXVYJj5PDsVXuBO3N\nXl+PsaNCq6HixGFS2GHtFaUV9up9YYVmB+Z10zKHvQKBgQDgnSKWt5CEsSFjK8Rz\niMdotNMFVdFXnsSA3E9w4uYCDw1jhtPm43RVuRIi5B1Y1rv4cqzDqm0Skz1ky7De\n5c1XvnNAhKXPzSYFgKUcUlUmEu+iacTNVebuBVG1IDHWdXMXyfa86nJw7PO7pIkn\n7R5WcFM3bg/FzCAophtGZtWNKwKBgQDYWopZw9hDDnMC1iKpHyw9VAJTeYycLdYm\nxRM3sBFSmjQA577QfChexFaEWr8flAIvh/HFoqO6GrhVOmfhKlSuNqUjJEhRN6vX\na5ohy3oQ/pKRC2Vxg2LpfPprUK5/pn/xA7ynUXmXz2SZieW0zqA06u8uBwX/Nuwk\nch2tDH6sfwKBgQDGa0lw5vvtnCQoXTOP9FZjsslvPx5NTt28D+LFkEsrqmxjbWmn\n32qXh4Pz+pvKLPekRHlF6DmuXQ+xCRdX8J1zU7SwW/22Ej3yQnCZEkpR9gxm5xSJ\nZ8c2oNBLNwOPtfVUIH+s51btVwUA0BqxgJB6P4PjxYB9dRM7lXEmwhUIPQKBgQCc\nbfJkbub5rQPZRCyxbVmWShyYcGULM1UImSuI8yPDPr1k/iqIIY0q3/jSH67azTA7\nX6aeyDZrRBCNhvo+4lVx1Q7Xds9W8dKsoh9CWhW7HeWpO70wMtgcjAGgACj7IM6W\n26XWsGEjM4/AN+U/MrrBKDChbfCXFAXvYBc23LbmTwKBgQCTYUuBoFzPT1WzThQh\nv6y69Gnt4/G4FDDKZaK8WFvOvpXZJFsfYafqgoWInByETjYgXiKvozR88WCp00e6\n0pyvhISNH3E6UGY+fvpMfuZWtmkvRvPbSOMdOThf0XwlivJDTo3M/vVzAVehKIql\n0D6ZatGwpMP1c+N+RvzBbHSK+g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "shuttlewiser-service-account@shuttlewiser.iam.gserviceaccount.com",
+  "client_id": "101491541193003651835",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/shuttlewiser-service-account%40shuttlewiser.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
