@@ -17,11 +17,15 @@ class PersonSeeder extends Seeder
     {
         DB::table('people')->insert([
             [
-                'first_name' => 'SUPER',
-                'middle_name' => 'ADMIN',
-                'last_name' => 'ADMIN',
+                'fullname' => 'SUPER ADMIN',
                 'status' => '1',
             ],
+            // [
+            //     'first_name' => 'SUPER',
+            //     'middle_name' => 'ADMIN',
+            //     'last_name' => 'ADMIN',
+            //     'status' => '1',
+            // ],
         ]);
     }
 }

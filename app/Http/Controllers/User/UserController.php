@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserController extends Controller
 {
@@ -43,23 +43,11 @@ class UserController extends Controller
                 'subtitle' => "Account Management",
                 'table_title' => "List of Users",
                 'module' => "",
-                'label' => "Changing an account password is a proactive step that reinforces account security and helps prevent unauthorized individuals from gaining access to personal or sensitive information. Regular password updates are an integral part of cybersecurity best practices, promoting a safer digital environment for users and organizations alike."
+                'label' => "アカウント パスワードの変更は、アカウントのセキュリティを強化し、権限のない第三者が個人情報や機密情報にアクセスするのを防ぐための予防策です。定期的なパスワード更新は、サイバーセキュリティの要素に不可欠であり、ユーザーと組織の両方にとってより安全な環境を促進します。"
             ]
         );
     }
-    public function manage_users()
-    {
-        return view(
-            'user.manage-users',
-            [
-                'title' => "Account Management",
-                'subtitle' => "Account Management",
-                'table_title' => "List of Users",
-                'module' => "",
-                'label' => "A collection or record of individuals who have registered or created accounts within that specific system. This list typically includes information about each user, such as their username, email address, password, and any additional details that the system requires or collects during the registration process."
-            ]
-        );
-    }
+ 
 
     public function  shuttlewiser_privacy()
     {
@@ -69,17 +57,30 @@ class UserController extends Controller
     }
 
 
+    public function manage_users()
+    {
+        return view(
+            'user.manage-users',
+            [
+                'title' => "アカウントマネジメント",
+                'subtitle' => "アカウントマネジメント",
+                'table_title' => "ユーザーリスト",
+                'module' => "",
+                'label' => ""
+            ]
+        );
+    }
 
     public function manage_restore_account()
     {
         return view(
             'user.manage-restore-account',
             [
-                'title' => "Restore Account",
-                'subtitle' => "Restore Account",
-                'table_title' => "Restore Account",
+                'title' => "アカウントの初期化",
+                'subtitle' => "アカウントの初期化",
+                'table_title' => "アカウントの初期化",
                 'module' => "",
-                'label' => " A process of recovering or reinstating a user's account that has been deactivated, suspended, or deleted. This functionality is typically provided to allow users to regain access to their accounts and any associated data or privileges."
+                'label' => ""
             ]
         );
     }
@@ -89,11 +90,11 @@ class UserController extends Controller
         return view(
             'user.manage-reset-password',
             [
-                'title' => "Reset Users Password",
-                'subtitle' => "Reset Users Password",
-                'table_title' => "Reset Users Password",
+                'title' => "ユーザーパスワードリセット",
+                'subtitle' => "ユーザーパスワードリセット",
+                'table_title' => "ユーザーパスワードリセット",
                 'module' => "",
-                'label' => "A process of changing or generating a new password for a user's account in order to regain access to the system. This functionality is typically implemented in systems to provide a way for users who have forgotten their passwords or are unable to log in due to an incorrect password."
+                'label' => ""
             ]
         );
     }
@@ -103,9 +104,9 @@ class UserController extends Controller
         return view(
             'user.add-new-user',
             [
-                'title' => "Add New User",
-                'subtitle' => "Add new user information",
-                'table_title' => "Add New User",
+                'title' => "新しいユーザーを追加",
+                'subtitle' => "新しいユーザーを追加",
+                'table_title' => "新しいユーザーを追加",
                 'module' => "",
                 'label' => ""
             ]
@@ -131,6 +132,7 @@ class UserController extends Controller
 
     public function getPosition(Request $request)
     {
+        
         $position_list = DepartmentHasPosition::with('position', 'department')->where('status', '1')->where('department_id', $request['department_id'])->get();
         // dd($position_list);
         return response()->json($position_list);
@@ -150,7 +152,7 @@ class UserController extends Controller
         $btnUpdate = "";
 
         $columns = array(
-            0 => 'people.first_name',
+            0 => 'people.fullname',
         );
         if (company() == 1) {
             $totalData = Person::where('status', '1')->count();
@@ -184,7 +186,7 @@ class UserController extends Controller
                 });
         }
 
-
+        // dd($query);
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
@@ -200,7 +202,7 @@ class UserController extends Controller
         } else {
             $search = $request->input('search.value');
 
-            $user = with(clone $query)->where('people.first_name', 'LIKE', "%{$search}%")
+            $user = with(clone $query)->where('people.fullname', 'LIKE', "%{$search}%")
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -212,53 +214,49 @@ class UserController extends Controller
         if (!empty($user)) {
             foreach ($user as $user) {
 
-                if (Gate::allows('permission', 'deleteAccount')) {
-                    $btnDelete = '<button onclick="removeUserRecord(' . $user->id . ')" type="button" class="btn btn-danger btn-icon-text p-2" fdprocessedid="613cnk">                                                 
-                          Delete
+                if (Gate::allows('permission', 'deleteAccount'))
+                {
+                $btnDelete = '<button onclick="removeUserRecord(' . $user->id . ')" type="button" class="btn btn-danger btn-icon-text p-2" fdprocessedid="613cnk">                                                 
+                         削除
                         </button>';
-                    if(access_level() == 1)
-                    {
-                        $btnLogout = '<button onclick="logoutUser(' . $user->id . ')" type="button" class="btn btn-primary btn-icon-text p-2" fdprocessedid="613cnk">                                                 
-                        Logout
-                      </button>';
-                    }
-                    else
-                    {
-                        $btnLogout = "";
-                    }
-                        
                 }
-                if (Gate::allows('permission', 'updateAccount')) {
+                if (Gate::allows('permission', 'updateAccount'))
+                {
                     $btnUpdate = '<button type="button" onclick="update(' . $user->id . ')" class="btn btn-info btn-icon-text p-2" fdprocessedid="613cnk">                                                 
-                    Update
+                    アップデート
                 </button>';
                 }
-
+               
 
                 $btnView = '<button type="button" onclick="view(' . $user->id . ')" class="btn btn-warning btn-icon-text p-2" fdprocessedid="613cnk">
                                                                          
-                        View
+                表示
                     </button>';
 
 
                 if ($user->status == '1') {
-                    $status = '<span class="badge badge-success">Active</span>';
+                    $status = '<span class="badge badge-success">アクティブ</span>';
                 } else {
-                    $status = '<span class="badge badge-danger">Inactive</span>';
+                    $status = '<span class="badge badge-danger">休止</span>';
                 }
 
+         
 
-                $buttons = $btnView . " " . $btnUpdate . " " . $btnDelete . " ".$btnLogout;
+            
+
+             
+
+
+                $buttons = $btnView . " " . $btnUpdate . " " . $btnDelete;
 
                 // $nestedData['arr'] =  unserialize($user->user->employee->employeeHasPosition->employeePositionHasPermissionAccess->permissionHasAccess->access->access_list);
-                $nestedData['fullname'] = $user->first_name . " " . $user->last_name;
+                $nestedData['fullname'] = $user->fullname;
                 // $nestedData['dob'] = $user->date_of_birth == null ? "-" : $user->date_of_birth;
                 // $nestedData['address'] = $user->home_address == null ? "-" : $user->home_address;
-                // $nestedData['email'] = $user->user->email;
-                $nestedData['company'] = $user->personCompanyDepartment->companyProfile->company_name;
-                $nestedData['department'] = $user->personCompanyDepartment->departmentsInfo->name;
-                $nestedData['position'] = $user->user->employee->employeeHasPosition->position->name;
+                $nestedData['email'] = $user->user->email;
+             
                 $nestedData['level_access'] =  $user->user->employee->employeeHasPosition->employeePositionHasPermissionAccess->permissionHasAccess->permission->permission_description;
+          
                 $nestedData['status'] = $status;
                 $nestedData['actions'] = $buttons;
                 $data[] = $nestedData;
@@ -278,7 +276,7 @@ class UserController extends Controller
     public function findAllAccountResetPassword(Request $request)
     {
         $columns = array(
-            0 => 'people.first_name',
+            0 => 'people.fullname',
         );
 
         if (company() == 1) {
@@ -294,6 +292,9 @@ class UserController extends Controller
             });
         }
 
+
+        // $totalData = Person::where('status', '1')->count();
+        // $query = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '1');
         // dd($query);
         $totalFiltered = $totalData;
 
@@ -310,7 +311,7 @@ class UserController extends Controller
         } else {
             $search = $request->input('search.value');
 
-            $user = with(clone $query)->where('people.first_name', 'LIKE', "%{$search}%")
+            $user = with(clone $query)->where('people.fullname', 'LIKE', "%{$search}%")
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -324,30 +325,28 @@ class UserController extends Controller
 
                 $btnReset = '<button onclick="resetPassword(' . $user->id . ')" type="button" class="btn btn-info btn-icon-text p-2" fdprocessedid="613cnk">
                                                                         
-                          Reset Password
+                パスワードリセット
                         </button>';
 
 
                 $btnView = '<button type="button" onclick="view(' . $user->id . ')" class="btn btn-warning btn-icon-text p-2" fdprocessedid="613cnk">
                                                         
-                        View
+                表示
                     </button>';
 
 
                 if ($user->status == '1') {
-                    $status = '<span class="badge badge-success">Active</span>';
+                    $status = '<span class="badge badge-success">アクティブ</span>';
                 } else {
-                    $status = '<span class="badge badge-danger">Inactive</span>';
+                    $status = '<span class="badge badge-danger">休止</span>';
                 }
 
                 $buttons = $btnView . " " . $btnReset;
                 // $buttons = '<button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="button">Update</button> <button class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">Delete</button>';
-                $nestedData['fullname'] = $user->first_name . " " . $user->last_name;
-                $nestedData['dob'] = $user->date_of_birth == null ? "-" : $user->date_of_birth;
-                $nestedData['address'] = $user->home_address == null ? "-" : $user->home_address;
-                $nestedData['email'] = $user->user->email;
-                $nestedData['company'] = $user->personCompanyDepartment->companyProfile->company_name;
-                $nestedData['department'] = $user->personCompanyDepartment->departmentsInfo->name;
+                $nestedData['fullname'] = $user->fullname;
+                $nestedData['email'] = $user->user == null ? "-" : $user->user->email;
+                $nestedData['company'] = $user->personCompanyDepartment == null ? "-" : $user->personCompanyDepartment->companyProfile->company_name;
+                $nestedData['department'] =  $user->personCompanyDepartment == null ? "-" : $user->personCompanyDepartment->departmentsInfo->name;
                 $nestedData['status'] = $status;
                 $nestedData['actions'] = $buttons;
                 $data[] = $nestedData;
@@ -364,29 +363,117 @@ class UserController extends Controller
         return json_encode($json_data);
     }
 
+    // public function findAllRestoreAccount(Request $request)
+    // {
+    //     $columns = array(
+    //         0 => 'people.first_name',
+    //     );
+
+    //     if (company() == 1) {
+    //         // $totalData = Person::where('status', '0')->count();
+    //         // $query = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '0');
+    //         $totalData = User::withTrashed()->where('status', '0')->count();
+    //         $query = User::withTrashed()->where('status', '0');
+    //     } else {
+    //         $totalData = Person::where('status', '0')->count();
+    //         $query = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '0');
+    //     }
+
+    //     // $totalData = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '0')
+    //     //     ->whereHas('personCompanyDepartment.companyProfile', function ($query) {
+    //     //         $query->where(DB::raw("id"), company());
+    //     //     })->count();
+    //     // $query = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '0')
+    //     //     ->whereHas('personCompanyDepartment.companyProfile', function ($query) {
+    //     //         $query->where(DB::raw("id"), company());
+    //     //     });
+    //     // dd($query);
+    //     $totalFiltered = $totalData;
+
+    //     $limit = $request->input('length');
+    //     $start = $request->input('start');
+    //     $order = $columns[$request->input('order.0.column')];
+    //     $dir = $request->input('order.0.dir');
+
+    //     if (empty($request->input('search.value'))) {
+    //         $user = with(clone $query)->offset($start)
+    //             ->limit($limit)
+    //             ->orderBy($order, $dir)
+    //             ->get();
+    //     } else {
+    //         $search = $request->input('search.value');
+
+    //         $user = with(clone $query)->where('people.first_name', 'LIKE', "%{$search}%")
+    //             ->offset($start)
+    //             ->limit($limit)
+    //             ->orderBy($order, $dir)
+    //             ->get();
+    //         $totalFiltered = with(clone $query)->count();
+    //     }
+
+    //     $data = array();
+    //     if (!empty($user)) {
+    //         foreach ($user as $user) {
+
+    //             $btnRestore = '<button onclick="restoreAccount(' . $user->id . ')" type="button" class="btn btn-info btn-icon-text p-2" fdprocessedid="613cnk">
+                                                                            
+    //                      Restore
+    //                     </button>';
+
+
+    //             // $btnView = '<button type="button" onclick="view(' . $user->id . ')" class="btn btn-outline-warning btn-icon-text" fdprocessedid="613cnk">
+    //             //         <i class="mdi mdi-eye"></i>                                                    
+    //             //         View
+    //             //     </button>';
+
+
+    //             if ($user->status == '1') {
+    //                 $status = '<span class="badge badge-success">Active</span>';
+    //             } else {
+    //                 $status = '<span class="badge badge-danger">Inactive</span>';
+    //             }
+
+    //             $buttons = $btnRestore;
+    //             // $buttons = '<button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="button">Update</button> <button class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">Delete</button>';
+    //             $nestedData['fullname'] = $user->name;
+    //             $nestedData['email'] = $user->email;
+    //             $nestedData['status'] = $status;
+    //             $nestedData['actions'] = $buttons;
+    //             $data[] = $nestedData;
+    //         }
+    //     }
+
+    //     $json_data = array(
+    //         "draw"            => intval($request->input('draw')),
+    //         "recordsTotal"    => intval($totalData),
+    //         "recordsFiltered" => intval($totalFiltered),
+    //         "data"            => $data
+    //     );
+
+    //     return json_encode($json_data);
+    // }
+
+
     public function findAllRestoreAccount(Request $request)
     {
         $columns = array(
-            0 => 'people.first_name',
+            0 => 'fullname',
         );
-
         if (company() == 1) {
             $totalData = Person::where('status', '0')->count();
             $query = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '0');
         } else {
-            $totalData = Person::where('status', '0')->count();
-            $query = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '0');
-        }
+            $totalData = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '0')->whereHas('personCompanyDepartment.companyProfile', function ($query) {
+                $query->where(DB::raw("id"), company());
+            })->count();
 
-        // $totalData = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '0')
-        //     ->whereHas('personCompanyDepartment.companyProfile', function ($query) {
-        //         $query->where(DB::raw("id"), company());
-        //     })->count();
-        // $query = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '0')
-        //     ->whereHas('personCompanyDepartment.companyProfile', function ($query) {
-        //         $query->where(DB::raw("id"), company());
-        //     });
-        // dd($query);
+            $query = Person::with('personCompanyDepartment.companyProfile', 'personCompanyDepartment.departmentsInfo', 'user',)->where('status', '0')->whereHas('personCompanyDepartment.companyProfile', function ($query) {
+                $query->where(DB::raw("id"), company());
+            });
+        }
+        // $totalData = User::withTrashed()->where('status', '0')->count();
+        // $query = User::withTrashed()->where('status', '0');
+        // dd($query->get());
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
@@ -402,7 +489,7 @@ class UserController extends Controller
         } else {
             $search = $request->input('search.value');
 
-            $user = with(clone $query)->where('people.first_name', 'LIKE', "%{$search}%")
+            $user = with(clone $query)->where('fullname', 'LIKE', "%{$search}%")
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -414,9 +501,9 @@ class UserController extends Controller
         if (!empty($user)) {
             foreach ($user as $user) {
 
-                $btnRestore = '<button onclick="restoreAccount(' . $user->id . ')" type="button" class="btn btn-info btn-icon-text p-2" fdprocessedid="613cnk">
+                $btnRestore = '<button onclick="restoreAccount(' . $user->user->id . ')" type="button" class="btn btn-info btn-icon-text p-2" fdprocessedid="613cnk">
                                                                             
-                         Restore
+                戻る
                         </button>';
 
 
@@ -427,19 +514,15 @@ class UserController extends Controller
 
 
                 if ($user->status == '1') {
-                    $status = '<span class="badge badge-success">Active</span>';
+                    $status = '<span class="badge badge-success">アクティブ</span>';
                 } else {
-                    $status = '<span class="badge badge-danger">Inactive</span>';
+                    $status = '<span class="badge badge-danger">休止</span>';
                 }
 
                 $buttons = $btnRestore;
                 // $buttons = '<button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="button">Update</button> <button class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded" type="button">Delete</button>';
-                $nestedData['fullname'] = $user->first_name . " " . $user->last_name;
-                $nestedData['dob'] = $user->date_of_birth == null ? "-" : $user->date_of_birth;
-                $nestedData['address'] = $user->home_address == null ? "-" : $user->home_address;
+                $nestedData['fullname'] = $user->name;
                 $nestedData['email'] = $user->user->email;
-                $nestedData['company'] = $user->personCompanyDepartment->companyProfile->company_name;
-                $nestedData['department'] = $user->personCompanyDepartment->departmentsInfo->name;
                 $nestedData['status'] = $status;
                 $nestedData['actions'] = $buttons;
                 $data[] = $nestedData;
@@ -458,6 +541,7 @@ class UserController extends Controller
 
     public function saveNewUser(Request $request)
     {
+
         $current_date = Carbon::today();
         $year = $current_date->year;
         $day = $current_date->day;
@@ -477,24 +561,10 @@ class UserController extends Controller
         if ($checkEmailExist == 0) {
             try {
                 DB::beginTransaction();
-                $person->code = "";
-                $person->first_name = convertData($request['firstname']);
-                $person->last_name = convertData($request['lastname']);
-                $person->middle_name = convertData($request['middlename']);
-                $person->affiliation = convertData($request['suffix']);
-                $person->region_id = $request['region'];
-                $person->region = $request['txtRegion'];
-                $person->province = $request['province'];
-                $person->city_mun = $request['city'];
-                $person->barangay = $request['barangay'];
-                $person->zip_code = "";
+                $person->fullname = convertData($request['fullname']);
                 $person->home_address = convertData($request['home_address']);
                 $person->gender = convertData($request['sex']);
                 $person->date_of_birth = convertData($request['date_of_birth']);
-                $person->civil_status = convertData($request['civil_status']);
-                $person->telephone_number = convertData($request['contact']);
-                $person->religion = convertData($request['religion']);
-                $person->image = "sampleimage.png";
                 $person->status = "1";
                 $person->save();
 
@@ -504,14 +574,16 @@ class UserController extends Controller
                 $personHasCompanyDepartment->status = "1";
                 $personHasCompanyDepartment->save();
 
-                $user->name = $request['firstname'] . " " . $request['lastname'];
+                $user->name = $request['fullname']; // NEW
                 $user->email = $request['email'];
+                $user->user_code = code_generator(8);
                 $user->person_id =  $person->id;
+                $user->is_admin ="1"; // NEW
                 $user->status = "1";
-                $user->password = Hash::make('secret123');
+                $user->password =  $request['access'] == "1" ? Hash::make('admin123') : Hash::make('secret123'); // NEW
                 $user->save();
 
-                $employee->employee_code = $request['employee_code'];
+                // $employee->employee_code = $request['employee_code'];
                 $employee->user_id =  $user->id;
                 $employee->person_has_company_department_id =  $personHasCompanyDepartment->id;
                 $employee->status = "1";
@@ -527,26 +599,23 @@ class UserController extends Controller
                 $comDeptHasEmpPos->status = "1";
                 $comDeptHasEmpPos->save();
 
-                // $generate_code = '  PER' . str_pad($day . substr($year, -2) . $month .  $person->id, 6, '0', STR_PAD_LEFT);
-                $person->code = generateCode('PER', $person->id);
-                $person->save();
-
                 $empPositionHasPermissionAccess->employee_has_position_id =  $employeeHasPosition->id;
                 $empPositionHasPermissionAccess->permission_has_access_id =  $request['access'];
                 $empPositionHasPermissionAccess->status =  "1";
                 $empPositionHasPermissionAccess->save();
 
 
-                $message = 'Record successfully Added!';
+                $message = '追加場所を保存しました';
 
                 DB::commit();
 
                 return response()->json(array('success' => true, 'messages' => $message));
             } catch (\PDOException $e) {
                 DB::rollBack();
-                return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => $message));
+                return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' =>"エラー"));
             }
         } else {
+            
             DB::rollBack();
             return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => "Email is already exists. Please try again!"));
         }
@@ -561,9 +630,9 @@ class UserController extends Controller
         ]);
 
 
-        #Match The Old Password
+        #Match The 旧パスワード
         if (!Hash::check($request->old_password, auth()->user()->password)) {
-            return back()->with("error", "Old Password Doesn't match!");
+            return back()->with("error", "旧パスワード Doesn't match!");
         }
 
 
@@ -594,6 +663,7 @@ class UserController extends Controller
             // return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
+            $message = 'Something went wrong!';
             return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => $message));
         }
     }
@@ -611,10 +681,25 @@ class UserController extends Controller
 
         try {
             DB::beginTransaction();
-            $person->first_name = convertData($request['firstname']);
-            $person->last_name = convertData($request['lastname']);
-            $person->middle_name = convertData($request['middlename']);
-            $person->affiliation = convertData($request['suffix']);
+            // $person->first_name = convertData($request['firstname']);
+            // $person->last_name = convertData($request['lastname']);
+            // $person->middle_name = convertData($request['middlename']);
+            // $person->affiliation = convertData($request['suffix']);
+            // $person->region_id = $request['region'];
+            // $person->region = $request['txtRegion'];
+            // $person->province = $request['province'];
+            // $person->city_mun = $request['city'];
+            // $person->barangay = $request['barangay'];
+            // $person->zip_code = "";
+            // $person->home_address = convertData($request['home_address']);
+            // $person->gender = convertData($request['sex']);
+            // $person->date_of_birth = convertData($request['date_of_birth']);
+            // $person->civil_status = convertData($request['civil_status']);
+            // $person->telephone_number = convertData($request['contact']);
+            // $person->religion = convertData($request['religion']);
+            // $person->save();
+
+            $person->fullname = convertData($request['fullname']);
             $person->region_id = $request['region'];
             $person->region = $request['txtRegion'];
             $person->province = $request['province'];
@@ -624,9 +709,6 @@ class UserController extends Controller
             $person->home_address = convertData($request['home_address']);
             $person->gender = convertData($request['sex']);
             $person->date_of_birth = convertData($request['date_of_birth']);
-            $person->civil_status = convertData($request['civil_status']);
-            $person->telephone_number = convertData($request['contact']);
-            $person->religion = convertData($request['religion']);
             $person->save();
 
             $personHasCompanyDepartment->company_id =  $request['company_name'];
@@ -643,17 +725,28 @@ class UserController extends Controller
             $empPositionHasPermissionAccess->save();
 
 
-            if ($user->email == $request['email']) {
-                $user->name = $request['firstname'] . " " . $request['lastname'];
-                $user->save();
-            } else {
-                if ($checkEmailExist) {
+            // if ($user->email != $request['email']) {
+            //     $user->name = $request['firstname'] . " " . $request['lastname'];
+            //     $user->save();
+            // } else {
+            //     if ($checkEmailExist) {
+            //         DB::rollBack();
+            //         return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => "Email is already exists. Please try again!"));
+            //     } else {
+            //         $user->name = $request['firstname'] . " " . $request['lastname'];
+            //         $user->name = $request['email'];
+            //         $user->save();
+            //     }
+            // }
+
+            if ($user->email != $request['email']) {
+                if ($checkEmailExist == 0) {
+                    $user->name = convertData($request['fullname']);
+                    $user->email = $request['email'];
+                    $user->save();
+                } else {
                     DB::rollBack();
                     return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => "Email is already exists. Please try again!"));
-                } else {
-                    $user->name = $request['firstname'] . " " . $request['lastname'];
-                    $user->name = $request['email'];
-                    $user->save();
                 }
             }
 
@@ -664,7 +757,7 @@ class UserController extends Controller
             return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => $message));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => "エラー"));
         }
     }
 
@@ -703,7 +796,7 @@ class UserController extends Controller
             return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
         }
     }
 
@@ -722,14 +815,52 @@ class UserController extends Controller
             return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
         }
     }
+
+    // public function removeRestoreUserRecord(Request $request, $id)
+    // {
+    //     $person = Person::where('status', '0')->findOrFail($id);
+    //     $user =  User::where('person_id', $id)->first();
+    //     $personHasCompanyDepartment = PersonHasCompanyDepartment::where('person_id', $person->id)->first();
+    //     $employee = Employee::where('user_id', $user->id)->first();
+    //     $employeeHasPosition = EmployeeHasPosition::where('employee_id', $employee->id)->first();
+    //     $empPositionHasPermissionAccess = EmpPosHasPermissionAccess::where('employee_has_position_id', $employeeHasPosition->id)->first();
+
+    //     $message = '';
+
+    //     try {
+    //         DB::beginTransaction();
+    //         if ($person->status == '0') {
+    //             $person->status = '1';
+    //             $user->status = '1';
+    //             $personHasCompanyDepartment->status = '1';
+    //             $employee->status = '1';
+    //             $employeeHasPosition->status = '1';
+    //             $empPositionHasPermissionAccess->status = '1';
+    //             $message = 'Record Successfully Restored!';
+    //         }
+
+    //         $person->save();
+    //         $user->save();
+    //         $personHasCompanyDepartment->save();
+    //         $employee->save();
+    //         $employeeHasPosition->save();
+    //         $empPositionHasPermissionAccess->save();
+    //         DB::commit();
+
+    //         return response()->json(array('success' => true, 'messages' => $message));
+    //     } catch (\PDOException $e) {
+    //         DB::rollBack();
+    //         return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
+    //     }
+    // }
 
     public function removeRestoreUserRecord(Request $request, $id)
     {
         $person = Person::where('status', '0')->findOrFail($id);
-        $user =  User::where('person_id', $id)->first();
+        $user =  User::withTrashed()->where('person_id', $id)->first();
         $personHasCompanyDepartment = PersonHasCompanyDepartment::where('person_id', $person->id)->first();
         $employee = Employee::where('user_id', $user->id)->first();
         $employeeHasPosition = EmployeeHasPosition::where('employee_id', $employee->id)->first();
@@ -742,10 +873,11 @@ class UserController extends Controller
             if ($person->status == '0') {
                 $person->status = '1';
                 $user->status = '1';
+                $user->restore();
                 $personHasCompanyDepartment->status = '1';
                 $employee->status = '1';
-                $employeeHasPosition->status = '1';
-                $empPositionHasPermissionAccess->status = '1';
+                $employeeHasPosition ->status = '1';
+                $empPositionHasPermissionAccess ->status = '1';
                 $message = 'Record Successfully Restored!';
             }
 
@@ -753,16 +885,17 @@ class UserController extends Controller
             $user->save();
             $personHasCompanyDepartment->save();
             $employee->save();
-            $employeeHasPosition->save();
+            $employeeHasPosition ->save();
             $empPositionHasPermissionAccess->save();
             DB::commit();
 
             return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'ページを更新し再度実行をお願い致します。'));
         }
     }
+
     public function checkPassword($password)
     {
         $user = Auth::user();

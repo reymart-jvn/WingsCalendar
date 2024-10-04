@@ -54,8 +54,8 @@
       )
     } else if (type === 'warning-message-and-cancel') {
       swal({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: '実行しますか？',
+        text: "元に戻すことはできません",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3f51b5',

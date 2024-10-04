@@ -2,283 +2,174 @@
 @section('css')
 <style>
     .input-group-text {
-    line-height: 0.9 !important;
-}
+        line-height: 0.9 !important;
+    }
 </style>
 @endsection
 @section('content')
 <div class="content-wrapper">
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">{{$title}}</h4>
-            <p class="card-description">
-                {{$label}}
-            </p>
-            <label for="firstname">INSTRUCTION: Please fillout the field with (<span style="color:red"> * </span>).</label><br><br>
-            <form class="forms-sample" id="add_new_user_form" method="POST">
-                @csrf
-                @method('POST')
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="firstname">Fist Name <span style="color:red"> * </span></label>
-                            <input type="text" class="form-control " id="firstname" name="firstname" placeholder="First Name">
-                          </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="lastname">Last Name <span style="color:red"> * </span></label>
-                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
+            <div class="card-body">
+                <h4 class="card-title">{{$title}}</h4>
+                <p class="card-description">
+                    {{$label}}
+                </p>
+                <label for="firstname">(<span style="color:red"> * </span>)の箇所を記入してください .</label>
+              
+                <form class="forms-sample" id="add_new_user_form" method="POST">
+                    @csrf
+                    @method('POST')
+                    <br>
+                    <br>
+                    <h5 class="modal-title" id="exampleModalLabel">個人インフォメーション</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="firstname">氏名 <span style="color:red"> * </span></label>
+                                <input type="text" class="form-control " id="firstname" name="fullname"
+                                    placeholder="個人情報">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="middlename">Middle Name <span style="color:red"> * </span></label>
-                            <input type="text" class="form-control" id="middlename" name="middlename" placeholder="Middle Name">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="suffix">Suffix <span style="color:red"> * </span></label>
-                            <select class="selectpicker form-control" data-live-search="true" name="suffix"
-                                id="suffix">
-                                <option value="" disabled="" selected="">Select...</option>
-                                <option value="II">II</option>
-                                <option value="III">III</option>
-                                <option value="IV">IV</option>
-                                <option value="V">V</option>
-                                <option value="JR">JR</option>
-                                <option value="SR">SR</option>
-                                <option value="NA">NA</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="date_of_birth">Date of Birth <span style="color:red"> * </span></label>
-                            {{-- <input type="text" class="form-control" id="date_of_birth"/> --}}
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="date_of_birth">生年月日 <span style="color:red"> * </span></label>
+                                {{-- <input type="text" class="form-control" id="date_of_birth" /> --}}
 
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text"> <span class="mdi mdi-calendar-plus"></span> </span>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <span class="mdi mdi-calendar-plus"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" id="date_of_birth" name="date_of_birth"
+                                        placeholder="生年月日">
                                 </div>
-                                <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" placeholder="Date of Birth">
-                              </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="sex">Sex <span style="color:red"> * </span></label>
-                            <select class="selectpicker form-control" data-live-search="true" name="sex"
-                                id="sex">
-                                <option value="" disabled="" selected="">Select...</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="civil_status">Civil Status <span style="color:red"> * </span></label>
-                            <select class="selectpicker form-control" data-live-search="true" name="civil_status"
-                                id="civil_status">
-                                <option value="" disabled="" selected="">Select...</option>
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                                <option value="Divorced">Divorced</option>
-                                <option value="Separated">Separated</option>
-                                <option value="Widowed">Widowed</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="religion">Religion <span style="color:red"> * </span></label>
-                            <input type="text" class="form-control" id="religion" name="religion" placeholder="Religion">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Region <span style="color:red"> * </span></label>
-                            <select class="form-control" data-live-search="true" id="region" name="region">
-                                <option value="" disabled selected>Select.....</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- Province -->
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Province <span style="color:red"> * </span></label>
-                            <select class="form-control" data-live-search="true" id="province" name="province">
-                                <option value="" disabled selected>Select.....</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- City -->
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>City <span style="color:red"> * </span></label>
-                            <select class="form-control" data-live-search="true" id="city" name="city">
-                                <option value="" disabled selected>Select.....</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <!-- Barangay -->
-                        <div class="form-group">
-                            <label>Barangay <span style="color:red"> * </span></label>
-                            <select class="form-control" data-live-search="true" id="barangay" name="barangay">
-                                <option value="" disabled selected>Select.....</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="form-group">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="home_address">Home Adrress <span style="color:red"> * </span></label><small>(e.g. street, block, lot, unit)</small>
-                                <input type="text" class="form-control" placeholder="Home Address" name="home_address"
-                                    id="home_address"></textarea>
+                                <label for="sex">性別 <span style="color:red"> * </span></label>
+                                <select class="selectpicker form-control" data-live-search="true" name="sex" id="sex">
+                                    <option value="" disabled="" selected="">選択...</option>
+                                    <option value="Male">男性</option>
+                                    <option value="Female">女性</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-5">
                             <div class="form-group">
-                                <label for="contact">Contact <span style="color:red"> * </span></label>
-                                <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact Number">
+                                <div class="form-group">
+                                    <label for="home_address">自宅住所 <span style="color:red"> * </span></label>
+                                    <input type="text" class="form-control" placeholder="自宅住所"
+                                        name="home_address" id="home_address"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="email">電子メール <span style="color:red"> * </span></label>
+                                <input id="email" type="email" name="email" :value="old('email')" required
+                                    class="form-control" placeholder="user@gmail.com">
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <h5 class="modal-title" id="exampleModalLabel">ユーザーアクセス</h5>
+                    <hr>
+                    <div class="row">
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="email">Email <span style="color:red"> * </span></label>
-                          <input id="email" type="email" name="email" :value="old('email')" required class="form-control" placeholder="user@gmail.com">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="region">会社名 <span style="color:red"> * </span></label>
+                                <select class="selectpicker form-control" id="company_name" name="company_name">
+                                    <option value="" disabled selected>選択...</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="region">Employee Number <span style="color:red"> * </span></label>
-                            <input type="text" class="form-control" id="employee_code" name="employee_code" placeholder="Employee Number">
-                        </div>
-                    </div> 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="region">Company <span style="color:red"> * </span></label>
-                            <select class="selectpicker form-control" id="company_name" name="company_name">
-                                <option value="" disabled selected>Select...</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="region">Department <span style="color:red"> * </span></label>
-                            <select class="selectpicker form-control" id="department" name="department">
-                                <option value="" disabled selected>Select...</option>
-                            </select>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="region">部署 <span style="color:red"> * </span></label>
+                                <select class="selectpicker form-control" id="department" name="department">
+                                    <option value="" disabled selected>選択...</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="region">Position <span style="color:red"> * </span></label>
-                            <select class="selectpicker form-control" id="position" name="position">
-                                <option value="" disabled selected>Select...</option>
-                            </select>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="region">役職 <span style="color:red"> * </span></label>
+                                <select class="selectpicker form-control" id="position" name="position">
+                                    <option value="" disabled selected>選択...</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="region">Level of Access <span style="color:red"> * </span></label>
-                            <select class="selectpicker form-control" id="access" name="access">
-                                <option value="" disabled selected>Select...</option>
-                            </select>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="region">アクセスレベル <span style="color:red"> * </span></label>
+                                <select class="selectpicker form-control" id="access" name="access">
+                                    <option value="" disabled selected>選択...</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                   
-                </div>
-              <button type="submit" class="btn btn-primary me-2">Save</button>
-              <button class="btn btn-light">Cancel</button>
-            </form>
-          </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary me-2">保存</button>
+                    <button type="button" onclick="clearFields()" class="btn btn-light">キャンセル</button>
+                </form>
+            </div>
         </div>
-      </div>
+    </div>
 </div>
 @endsection
 @section('js')
 <script>
-$(function(){
+    $(function(){
   $('#date_of_birth').datepicker();
 });
 </script>
-<script src="{{ asset('assets/js/ph_address.js') }}"></script>
 <script>
-    $(function() {
-        $('#date_of_birth').datepicker();
-
-    });
+    const clearFields = () =>
+    {
+        $("#add_new_user_form")[0].reset();
+        var form = $("#add_new_user_form");
+        form.validate().resetForm();
+        form.find(".error").removeClass("error");
+        form.find('.form-control').removeClass('is-valid');
+    }
 </script>
 
 <script>
     $(document).ready(function() {
         $("#add_new_user_form").validate({
                 rules: {
-                    firstname: "required",
-                    lastname: "required",
-                    middlename: "required",
-                    suffix: "required",
+                    fullname: "required",
                     date_of_birth: "required",
                     sex: "required",
-                    civil_status: "required",
-                    religion: "required",
-                    region: "required",
-                    province: "required",
-                    city: "required",
-                    barangay: "required",
                     home_address: "required",
-                    contact: "required",
                     email: "required",
                     company_name: "required",
                     department: "required",
                     position: "required",
                     access: "required",
-                    employee_code: "required",
 
                 },
                 messages: {
-                    firstname: "Please enter your firstname",
-                    lastname: "Please enter your lastname",
-                    middlename: "Please enter your middlename",
-                    suffix: "Please enter your suffix",
-                    date_of_birth: "Please enter your date of birth",
-                    sex: "Please enter your sex",
-                    civil_status: "Please enter your civil status",
-                    religion: "Please enter your religion",
-                    region: "Please enter your region",
-                    province: "Please enter your province",
-                    city: "Please enter your city",
-                    barangay: "Please enter your barangay",
-                    home_address: "Please enter your home address",
-                    contact: "Please enter your contact",
-                    email: "Please enter your email",
-                    company_name: "Please enter your company",
-                    department: "Please enter your department",
-                    position: "Please enter your position",
-                    access: "Please enter your level of access",
-                    employee_code: "Please enter your employee number",
+                    fullname: "氏名の入力をお願いします",
+                    date_of_birth: "生年月日の入力をお願いします",
+                    sex: "性別の入力をお願いします",
+                    home_address: "住所の入力をお願いします",
+                    email: "メールアドレスの入力をお願いします",
+                    company_name: "会社名の入力をお願いします",
+                    department: "部署の入力をお願いします",
+                    position: "役職の入力をお願いします",
+                    access: "アクセスレベルの入力をお願いします",
                 },
                 onfocusout: function (e) {
                     this.element(e);
@@ -304,20 +195,20 @@ $(function(){
                 submitHandler: function (form) {
                     
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
+                        title: '保存してもよろしいですか？',
+                        text: "元に戻すことはできません",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Save it!',
+                        cancelButtonText: "キャンセル",   
+                        confirmButtonText: 'はい。保存いたします。',
                         //footer: '<a href = "mailto: jvn-cgs.com">Send an email to us!</a>'
                         }).then((result) => {
                             if (result.value) {
 
                                 
                                 var formData = new FormData($("#add_new_user_form").get(0));
-                                formData.append('txtRegion', $("#region :selected").text());
 
                                 $.ajax({
                                     url: '/save-new-user',
@@ -340,30 +231,30 @@ $(function(){
                                             //reset form
                                             form.find('.form-control').removeClass('is-valid');
                                             swal.fire({
-                                                title: "Saved!",
-                                                text: "Successfully Saved!",
+                                                title: "正しく保存されました。",
+                                                text: "正しく保存されました。",
                                                 icon: 'success',
                                                 type: "success",
-                                                html: "<b>Successfully Saved",
+                                                // html: "<b>Successfully Saved",
                                                 // footer: '<a href = "mailto: enterprise.cabuyao@gmail.com">Send an email to us!</a>'
                                             });
 
                                             
                                         } else {
                                             swal.fire({
-                                            title: "Oops! Something went wrong.",
+                                            title: "予期しないエラーが発生いたしました。",
                                             icon: 'error',
                                             html: "<b>" + data
                                                 .messages +
-                                                "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                                "! <br>もしくは管理業者までお問い合わせお願い致します。</b>",
                                             type: "error",
                                         });
                                         }
                                     },
                                     error: function (jqXHR, textStatus, errorThrown) {
                                         swal.fire({
-                                            title: "Oops! something went wrong.",
-                                            html: "<b>" + errorThrown +"! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                            title: "予期しないエラーが発生いたしました。",
+                                            html: "<b>" + errorThrown +"! <br>もしくは管理業者までお問い合わせお願い致します。</b>",
                                             type: "error",
                                         });
                                     },
@@ -381,32 +272,19 @@ $(function(){
 
 <script>
     //Start of Function for Address
-    let myData = data;
-    let region = '';
-    let province = '';
-    let counter = 1;
 
     var departmentID,positionID;
-    $(document).ready(function() {
-        addressAutoFill('#region', '#province', '#city', '#barangay');
-        addressAutoFill('#region-2', '#province-2', '#city-2', '#barangay-2');
-    });
 
     $.ajax({
             url: '{{ route('get-all-company') }}',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
-                console.log(response);
+              
                 for (let index = 0; index < response.length; index++) {
                     // console.log(response[index].vehicle_type_name);
                     $('[name="company_name"]').append('<option value=' + response[index].id + '>' +
                         response[index].company_name + '</option>');
-
-
-              
-
-                    // $('.selectpicker').selectpicker('refresh');
                 }
 
             }
@@ -432,8 +310,6 @@ $(function(){
                         $('[name="department"]').append('<option value=' + response[index].departments_info.id + '>' +
                         response[index].departments_info.name + '</option>');
                         departmentID = response[index].departments_info.id;
-                  
-
                     }
 
                     $("#department").trigger('change');
@@ -485,13 +361,10 @@ $(function(){
                 },
                 dataType: "JSON",
                 success: function(response) {
-                    console.log(response);
                     for (let index = 0; index < response.length; index++) {
                         $('[name="access"]').append('<option value=' + response[index].id + '>' +
                         response[index].permission.permission_description + '</option>');
                     }
-
-                    // $("#department_acronyms").text(response[0].department.acronym);
                     
                 },
                 error: function(jqXHR, textStatus, errorThrown) {

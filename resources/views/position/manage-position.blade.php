@@ -10,8 +10,7 @@
                         {{-- <button type="button" data-toggle="modal" data-target="#update_modal" class="btn btn-success btn-icon-tex">Add New Vehicle Type</button> --}}
 
                         @if (Gate::allows('permission', 'createPosition'))
-                            <button type="button" onclick="showModalAdd()" class="btn btn-success btn-icon-tex">Add New
-                                Position</button>
+                            <button type="button" onclick="showModalAdd()" class="btn btn-success btn-icon-tex">新しい位置情報を追加する</button>
                         @endif
                     </h4>
 
@@ -23,17 +22,17 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Position Name
+                                        役職名
                                     </th>
                                     <th>
-                                        Description
+                                        説明
                                     </th>
                                     <th>
-                                        Status
+                                        状態
                                     </th>
                                     <th @if (Gate::allows('permission', 'updatePosition') || Gate::allows('permission', 'deletePosition')) style="width: 200px;" @endif style="width: 0px;">
                                         @if (Gate::allows('permission', 'updatePosition') || Gate::allows('permission', 'deletePosition'))
-                                            Action
+                                        アクション
                                         @endif
                                     </th>
                                 </tr>
@@ -67,9 +66,9 @@
                         <div class="row">
                             <div class="col-md">
                                 <div class="form-group">
-                                    <label for="add_position_name">Position Name <span style="color:red"> * </span></label>
+                                    <label for="add_position_name">役職名 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_position_name"
-                                        name="add_position_name" placeholder="position Name">
+                                        name="add_position_name" placeholder="役職名">
                                 </div>
                             </div>
                         </div>
@@ -77,9 +76,9 @@
                         <div class="row">
                             <div class="col-md">
                                 <div class="form-group">
-                                    <label for="add_description">Description <span style="color:red"> * </span></label>
+                                    <label for="add_description">説明 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_description" name="add_description"
-                                        placeholder="Description">
+                                        placeholder="説明">
                                 </div>
                             </div>
                         </div>
@@ -87,8 +86,8 @@
                
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">変更を保存する</button>
                 </div>
             </form>
             </div>
@@ -114,9 +113,9 @@
                         <div class="row">
                             <div class="col-md">
                                 <div class="form-group">
-                                    <label for="update_position_name">Position Name <span style="color:red"> * </span></label>
+                                    <label for="update_position_name">役職名 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_position_name"
-                                        name="update_position_name" placeholder="position Name">
+                                        name="update_position_name" placeholder="役職名">
                                 </div>
                             </div>
                         </div>
@@ -124,16 +123,16 @@
                         <div class="row">
                             <div class="col-md">
                                 <div class="form-group">
-                                    <label for="update_description">Description <span style="color:red"> * </span></label>
+                                    <label for="update_description">説明 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_description"
-                                        name="update_description" placeholder="Description">
+                                        name="update_description" placeholder="説明">
                                 </div>
                             </div>
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">変更を保存する</button>
                 </div>
                 </form>
             </div>
@@ -148,7 +147,7 @@
             "processing": true,
             "serverSide": true,
             "language": {
-                "sSearch": "Search Position Name:"
+                "sSearch": "検索位置名:"
             },
             "ajax": {
                 "url": '{{ route('get-position') }}',
@@ -189,7 +188,7 @@
         //SHOW ADD NEW VEHICLE TYPE MODAL
         const showModalAdd = () => {
             $("#add_position_forms").validate().resetForm();
-            $("#add_position_modal").find(".modal-header > h5").text("Add New Position").end()
+            $("#add_position_modal").find(".modal-header > h5").text("新しい位置情報を追加する").end()
                 .modal('show');
         }
 
@@ -204,8 +203,8 @@
 
                 },
                 messages: {
-                    add_position_name: "Please enter position Name",
-                    add_description: "Please enter description",
+                    add_position_name: "役職名を入力してください",
+                    add_description: "説明を入力してください",
                 },
                 onfocusout: function(e) {
                     this.element(e);
@@ -231,13 +230,14 @@
                 submitHandler: function(form) {
 
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
+                        title: '実行しますか？',
+                        text: "元に戻すことはできません",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Save it!',
+                        cancelButtonText: "キャンセル",   
+                        confirmButtonText: 'はい。実行します',
                         //footer: '<a href = "mailto: jvn-cgs.com">Send an email to us!</a>'
                     }).then((result) => {
                         if (result.value) {
@@ -269,22 +269,22 @@
                                         $('#add_position_modal').modal('hide');
 
                                         swal.fire({
-                                            title: "Saved!",
-                                            text: "Successfully Saved!",
+                                            title: "保存をします。",
+                                            text: "保存に成功しました",
                                             icon: 'success',
                                             type: "success",
-                                            html: "<b>New position data has been successfully saved.",
+                                            html: "<b>新しい役職データが正常に保存されました。",
                                             // footer: '<a href = "mailto: enterprise.cabuyao@gmail.com">Send an email to us!</a>'
                                         });
 
 
                                     } else {
                                         swal.fire({
-                                            title: "Oops! something went wrong.",
+                                            title: "入力に間違いがあります。",
                                             icon: "error",
                                             html: "<b>" + data
                                                 .messages +
-                                                "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                                "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                                             type: "error",
                                             footer: ''
                                         });
@@ -292,9 +292,9 @@
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) {
                                     swal.fire({
-                                        title: "Oops! something went wrong.",
+                                        title: "入力に間違いがあります。",
                                         html: "<b>" + errorThrown +
-                                            "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                            "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                                         type: "error",
                                         footer: ''
                                     });
@@ -318,8 +318,8 @@
                     update_description: "required",
                 },
                 messages: {
-                    update_position_name: "Please enter position name",
-                    update_description: "Please enter description",
+                    update_position_name: "ポジションを入力してください",
+                    update_description: "説明を入力してください",
                 },
                 onfocusout: function(e) {
                     this.element(e);
@@ -345,13 +345,14 @@
                 submitHandler: function(form) {
                     //EVENT FOR SAVING
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
+                        title: '実行しますか？',
+                        text: "元に戻すことはできません",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Update it!',
+                        cancelButtonText: "キャンセル",  
+                        confirmButtonText: '更新します。',
                         //footer: '<a href = "mailto: jvn-cgs.com">Send an email to us!</a>'
                     }).then((result) => {
 
@@ -382,21 +383,21 @@
                                             "is-valid");
                                         $('#update_position_modal').modal('hide');
                                         swal.fire({
-                                            title: "Updated!",
-                                            text: "Successfully Update!",
+                                            title: "更新されました！",
+                                            text: "更新に成功しました。",
                                             icon: 'success',
                                             type: "success",
-                                            html: "<b>Position details has been successfully updated.",
+                                            html: "<b>ポジションの詳細が正常に更新されました。",
                                             // footer: '<a href = "mailto: enterprise.cabuyao@gmail.com">Send an email to us!</a>'
                                         });
                                         table.ajax.reload(null, false);
                                     } else {
                                         swal.fire({
-                                            title: "Oops! something went wrong.",
+                                            title: "入力に間違いがあります。",
                                             icon: "error",
                                             html: "<b>" + data
                                                 .messages +
-                                                "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                                "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                                             type: "error",
                                             footer: ''
                                         });
@@ -405,9 +406,9 @@
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) {
                                     swal.fire({
-                                        title: "Oops! something went wrong.",
+                                        title: "入力に間違いがあります。",
                                         html: "<b>" + errorThrown +
-                                            "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                            "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                                         type: "error",
                                         footer: ''
                                     });
@@ -445,11 +446,11 @@
 
                     } else {
                         swal.fire({
-                            title: "Oops! something went wrong.",
+                            title: "入力に間違いがあります。",
                             icon: "error",
                             html: "<b>" + data
                                 .messages +
-                                "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                             type: "error",
                             footer: ''
                         });
@@ -457,7 +458,7 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     swal.fire({
-                        title: "Oops! something went wrong.",
+                        title: "入力に間違いがあります。",
                         text: errorThrown,
                         icon: 'success'
                     })
@@ -473,13 +474,14 @@
         //DELETE EVENT
         const removePositionRecord = (id) => {
             Swal.fire({
-                title: 'Remove the Position Data?',
+                title: '位置データを削除しますか?',
                 icon: 'warning',
-                text: "You won't be able to revert this!",
+                text: "元に戻すことはできません",
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Remove it!'
+                cancelButtonText: "キャンセル",  
+                confirmButtonText: 'はい、削除します。'
             }).then((result) => {
                 if (result.value) {
                     //process loader true
@@ -496,18 +498,18 @@
                             if (data.success) {
                                 table.ajax.reload(null, false);
                                 Swal.fire({
-                                    title: "Removed!",
-                                    text: "Deleted Successfully!",
+                                    title: "削除されました！",
+                                    text: "正常に削除されました!",
                                     icon: "success",
-                                    html: "<b>Position details has been successfully removed."
+                                    html: "<b>ポジションの詳細が正常に削除されました。"
                                 });
                             } else {
                                 swal.fire({
-                                    title: "Oops! something went wrong.",
+                                    title: "入力に間違いがあります。",
                                     icon: "error",
                                     html: "<b>" + data
                                         .messages +
-                                        "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                        "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                                     type: "error",
                                     footer: ''
                                 });
@@ -515,7 +517,7 @@
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             swal.fire({
-                                title: "Oops! something went wrong.",
+                                title: "入力に間違いがあります。",
                                 text: errorThrown,
                                 icon: 'success'
                             })

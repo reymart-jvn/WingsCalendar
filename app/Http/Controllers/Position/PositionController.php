@@ -26,9 +26,9 @@ class PositionController extends Controller
         [
             'title' => "Position Management",
             'subtitle' => "Position Management",
-            'table_title' => "List of Position",
+            'table_title' => "ポジション一覧",
             'module' => "",
-            'label' => "A company refers to a collection or inventory of different job positions or roles within the organizational structure. This list helps in defining and categorizing the various positions within the company, enabling effective human resources management, organizational planning, and workflow coordination. The specific positions included in the list can vary depending on the company's size, industry, and organizational structure."
+            'label' => "会社とは、組織構造内のさまざまな役職や役割の集合または目録を指します。このリストは、社内のさまざまな役職を定義および分類するのに役立ち、効果的な人事管理、組織計画、およびワークフローの調整を可能にします。リストに含まれる具体的なポジションは、企業の規模、業界、組織構造によって異なります。"
         ]);
     }
 
@@ -77,20 +77,20 @@ class PositionController extends Controller
                 {
                  $btnDelete = '<button onclick="removePositionRecord('.$position->id.')" type="button" class="btn btn-danger btn-icon-text p-2" fdprocessedid="613cnk">
                                                                              
-                           Delete
+                           消去
                          </button>';
                 }  
                 if (Gate::allows('permission', 'updatePosition'))
                 {
                  $btnUpdate = '<button type="button" onclick="update('.$position->id.')" class="btn btn-info btn-icon-text p-2" fdprocessedid="613cnk">
-                                                                                
-                             Update
+                                                                                                        
+                        アップデート
                          </button>';
                 }
                 if($position->status == '1'){
-                     $status = '<span class="badge badge-success">Active</span>';
+                     $status = '<span class="badge badge-success">アクティブ</span>';
                 }else{
-                     $status = '<span class="badge badge-danger">Inactive</span>';
+                     $status = '<span class="badge badge-danger">非アクティブ</span>';
                 }
  
  
@@ -122,14 +122,14 @@ class PositionController extends Controller
              $position->name = convertData($request['add_position_name']);
              $position->description = convertData($request['add_description']);
              $position->status = "1";
-             $message = 'Record successfully Added!';
+             $message = '追加場所を保存しました';
              $position->save();
              DB::commit();
  
              return response()->json(array('success'=> true, 'messages'=>$message));
          } catch (\PDOException $e) {
              DB::rollBack();
-             return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'Transaction failed!'));
+             return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'エラー'));
          }
      }
  
@@ -157,7 +157,7 @@ class PositionController extends Controller
              return response()->json(array('success'=> true, 'messages'=>$message));
          } catch (\PDOException $e) {
              DB::rollBack();
-             return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'Transaction failed!'));
+             return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'エラー'));
          }
  
      }
@@ -186,7 +186,7 @@ class PositionController extends Controller
              return response()->json(array('success'=> true, 'messages'=>$message));
          } catch (\PDOException $e) {
              DB::rollBack();
-             return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'Transaction failed!'));
+             return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'エラー'));
          }
      }
 

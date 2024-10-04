@@ -70,7 +70,7 @@ class PassengerController extends Controller
        
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!','type' => "5"));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー','type' => "5"));
         }
     }
 
@@ -99,7 +99,7 @@ class PassengerController extends Controller
        
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
         }
     }
 
@@ -144,7 +144,7 @@ class PassengerController extends Controller
        
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
         }
     }
 }

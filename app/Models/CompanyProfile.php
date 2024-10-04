@@ -21,48 +21,45 @@ class CompanyProfile extends Model
         return $this->belongsTo('App\Models\PermissionHasAccess');
     }
 
-    public function passengerHasCompany()
+    public function activity()
     {
-       return $this->belongsTo('App\Models\PassengerHasCompany');
+       return $this->belongsTo('App\Models\Activity');
     }
 
-    public function ratePerTrip()
+    public function events()
     {
-        return $this->hasMany('App\Models\RatePerTrip','company_id','id');
-    }
-    public function bookingInfo()
-    {
-        return $this->hasMany('App\Models\BookingInformation','company_id','id');
-    
+        return $this->belongsTo('App\Models\Events');
     }
 
-    public function billing()
+    public function locations()
     {
-        return $this->hasMany('App\Models\Billing','company_id','id');
-    
+        return $this->belongsTo('App\Models\Locations');
     }
 
-    public function holidays()
+    public function eventActivityInCharge()
     {
-        return $this->belongsTo('App\Models\Holidays');
+        return $this->belongsTo('App\Models\EventActivityInCharge');
+    }
+
+    public function personincharge()
+    {
+        return $this->belongsTo('App\Models\PersonInCharge');
     }
 
 
-    public function bookingGroup()
-    {
-        return $this->hasMany('App\Models\BookingGroup','company_id','id');
-    }
 
-    public function shifting()
-    {
-        return $this->hasMany('App\Models\Shifting','company_id','id');
-    
-    }
 
-    public function purchaseRequest()
-    {
-        return $this->belongsTo('App\Models\PurchaseRequest');
-    }
+ 
+
+ 
+
+
+  
+
+  
+  
+
+
 
     // public function companyHasDepartment()
     // {

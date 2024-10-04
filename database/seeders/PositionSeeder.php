@@ -25,6 +25,11 @@ class PositionSeeder extends Seeder
                 'description' => 'HUMAN RESOURCES ADMIN',
                 'status' => '1',
             ],
+            [
+                'name' => 'EVENT COORDINATOR',
+                'description' => 'EVENT COORDINATOR',
+                'status' => '1',
+            ],
         ]);
     }
 }

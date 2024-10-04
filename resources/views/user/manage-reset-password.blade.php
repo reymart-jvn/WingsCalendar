@@ -14,28 +14,22 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Full Name
+                                        氏名
                                     </th>
                                     <th>
-                                        Date of Birth
+                                        メールアドレス
                                     </th>
                                     <th>
-                                        Address
+                                        会社名
                                     </th>
                                     <th>
-                                        Email
+                                        部署
                                     </th>
                                     <th>
-                                        Company
-                                    </th>
-                                    <th>
-                                        Department
-                                    </th>
-                                    <th>
-                                        Status
+                                        ステータス
                                     </th>
                                     <th style="width: 200px;">
-                                        Action
+                                        アクション
                                     </th>
                                 </tr>
                             </thead>
@@ -50,101 +44,58 @@
 
     <!-- Modal-->
     <div class="modal fade" tabindex="-1" role="dialog" id="view_user_modal">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-xl"  role="document">
             <div class="modal-content">
-                <div class="modal-header bg-secondary text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">View Account Details</h5>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">アカウント詳細の表示</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" class="text-white">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div style="margin:20px">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="symbol symbol-50 symbol-xl-150">
-                                    <img style="width: 100%;height:100%" id="show_avatar" />
-                                    <i class="symbol-badge symbol-badge-bottom bg-success"></i>
-                                </div>
 
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="symbol symbol-50 symbol-xl-150">
+                                <img style="width: 70%;height:70%" id="show_avatar" />
+                                <i class="symbol-badge symbol-badge-bottom bg-success"></i>
+                            </div>
 
-                            </div>
-                            <div class="col-md-7">
-                                <div class="form-group">
-                                    <label for="">Full Name:</label>
-                                    <b>
-                                        <p style="font-weight:bold; font-size:15" id="show_full_name" name="show_full_name">
-                                        </p>
-                                    </b>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Email Address:</label>
-                                    <p style="font-weight:bold" id="show_email"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Mobile Number:</label>
-                                    <p style="font-weight:bold" id="show_contact"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Telephone Number:</label>
-                                    <p style="font-weight:bold" id="show_telephone_number"></p>
-                                </div>
-                            </div>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="">Sex:</label>
-                                    <p style="font-weight:bold" id="show_sex"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Address:</label>
-                                    <p style="font-weight:bold" id="show_address"></p>
-                                </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">氏名:</label>
+                                <b>
+                                    <p style="font-weight:bold; font-size:15" id="show_full_name" name="show_full_name">
+                                    </p>
+                                </b>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="">Date of Birth:</label>
-                                    <p style="font-weight:bold" id="show_dob"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Barangay:</label>
-                                    <p style="font-weight:bold" id="show_barangay"></p>
-                                </div>
+                            <div class="form-group">
+                                <label for="">メールアドレス:</label>
+                                <p style="font-weight:bold" id="show_email"></p>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="">Civil Status:</label>
-                                    <p style="font-weight:bold" id="show_civil_status"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Religion:</label>
-                                    <p style="font-weight:bold" id="show_religion"></p>
-                                </div>
+                            <div class="form-group">
+                                <label for="">性別:</label>
+                                <p style="font-weight:bold" id="show_sex"></p>
                             </div>
+                           
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="">City:</label>
-                                    <p style="font-weight:bold" id="show_city"></p>
-                                </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">生年月日:</label>
+                                <p style="font-weight:bold" id="show_dob"></p>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="">Province:</label>
-                                    <p style="font-weight:bold" id="show_province"></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="">Region:</label>
-                                    <p style="font-weight:bold" id="show_region"></p>
-                                </div>
+                            <div class="form-group">
+                                <label for="">住所:</label>
+                                <p style="font-weight:bold" id="show_address"></p>
                             </div>
                         </div>
                     </div>
+
+
+
+
                 </div>
                 <div class="modal-footer">
 
@@ -371,7 +322,7 @@
             "processing": true,
             "serverSide": true,
             "language": {
-                "sSearch": "Search Fullname:"
+                "sSearch": "氏名検索:"
             },
             "ajax": {
                 "url": '{{ route('get-all-users-reset') }}',
@@ -383,12 +334,6 @@
             },
             "columns": [{
                     "data": "fullname"
-                },
-                {
-                    "data": "dob"
-                },
-                {
-                    "data": "address"
                 },
                 {
                     "data": "email"
@@ -437,31 +382,24 @@
                     if (data.success) {
                         $('#view_user_modal')
                             .find('.modal-header > h5')
-                            .text("View User Account Details").end()
+                            .text("ユーザーアカウント詳細の表示").end()
                             .modal('show');
                         // $('#update_id').val(data.data.id);
                         $('#show_avatar').attr('src', '../assets/images/default-user-image.webp');
-                        $('#show_full_name').text(data[0].first_name + " " + data[0]
-                            .middle_name + " " + data[0].last_name);
+                        $('#show_full_name').text(data[0].fullname);
                         $('#show_email').text(data[0].user.email);
-                        $('#show_contact').text(data[0].telephone_number);
                         $('#show_sex').text(data[0].gender);
                         $('#show_dob').text(data[0].date_of_birth);
                         $('#show_civil_status').text(data[0].civil_status);
                         $('#show_address').text(data[0].home_address);
-                        $('#show_barangay').text(data[0].barangay);
-                        $('#show_religion').text(data[0].religion);
-                        $('#show_city').text(data[0].city_mun);
-                        $('#show_province').text(data[0].province);
-                        $('#show_region').text(data[0].region);
 
                     } else {
                         swal.fire({
-                            title: "Oops! Something went wrong.",
+                            title: "予期しないエラーが発生いたしました。",
                             icon: 'error',
                             html: "<b>" + data
                                 .messages +
-                                "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                "! <br>もしくは管理業者までお問い合わせお願い致します。</b>",
                             type: "error",
                         });
                     }
@@ -469,7 +407,7 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                     swal.fire({
                         icon: 'error',
-                        title: "Oops! Something went wrong.",
+                        title: "予期しないエラーが発生いたしました。",
                         text: errorThrown,
                         type: "error",
                     })
@@ -484,15 +422,15 @@
 
         //DELETE EVENT
         const resetPassword = (id) => {
-            // const url = '{{ route('get-drivers') }}';
             Swal.fire({
-                title: 'Reset Password?',
+                title: 'パスワードリセット?',
                 icon: 'warning',
-                text: "You won't be able to revert this!",
+                text: "元に戻すことはできません",
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Reset it!'
+                cancelButtonText: "キャンセル",   
+                confirmButtonText: 'リセットに同意します!'
             }).then((result) => {
                 if (result.value) {
                     //process loader true
@@ -515,7 +453,7 @@
                                 });
                             } else {
                                 Swal.fire({
-                                    title: "Oops! something went wrong.",
+                                    title: "予期しないエラーが発生いたしました。",
                                     text: data.messages,
                                     icon: 'success'
                                 })
@@ -523,7 +461,7 @@
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             swal.fire({
-                                title: "Oops! something went wrong.",
+                                title: "予期しないエラーが発生いたしました。",
                                 text: errorThrown,
                                 icon: 'success'
                             })

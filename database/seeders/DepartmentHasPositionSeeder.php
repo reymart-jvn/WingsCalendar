@@ -26,6 +26,11 @@ class DepartmentHasPositionSeeder extends Seeder
                 'position_id' => '2',
                 'status' => '1',
             ],
+            [
+                'department_id' => '3',
+                'position_id' => '3',
+                'status' => '1',
+            ],
         ]);
     }
 }

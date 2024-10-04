@@ -22,7 +22,7 @@
         <div class="col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card justify-content-center">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">{{ __('Change Password') }}</h4>
+                    <h4 class="card-title">{{ __('パスワード変更') }}</h4>
                     <p class="card-description text-warning">{{ $label }}</p>
                         <form action="{{ route('update-password') }}" method="POST">
                             @csrf
@@ -38,25 +38,25 @@
                                 @endif
     
                                 <div class="mb-3">
-                                    <label for="oldPasswordInput" class="form-label">Old Password</label>
+                                    <label for="oldPasswordInput" class="form-label">旧パスワード</label>
                                     <input name="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror" id="oldPasswordInput"
-                                        placeholder="Old Password">
+                                        placeholder="旧パスワード">
                                     @error('old_password')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newPasswordInput" class="form-label">New Password</label>
+                                    <label for="newPasswordInput" class="form-label">新パスワード</label>
                                     <input name="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" id="newPasswordInput"
-                                        placeholder="New Password">
+                                        placeholder="新パスワード">
                                     @error('new_password')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="confirmNewPasswordInput" class="form-label">Confirm New Password</label>
+                                    <label for="confirmNewPasswordInput" class="form-label">新パスワードの承認</label>
                                     <input name="new_password_confirmation" type="password" class="form-control" id="confirmNewPasswordInput"
-                                        placeholder="Confirm New Password">
+                                        placeholder="新パスワードの承認">
                                 </div>
     
                             </div>

@@ -14,28 +14,16 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Full Name
+                                        氏名
                                     </th>
                                     <th>
-                                        Date of Birth
+                                        メールアドレス
                                     </th>
                                     <th>
-                                        Address
-                                    </th>
-                                    <th>
-                                        Email
-                                    </th>
-                                    <th>
-                                        Company
-                                    </th>
-                                    <th>
-                                        Department
-                                    </th>
-                                    <th>
-                                        Status
+                                        ステータス
                                     </th>
                                     <th style="width: 200px;">
-                                        Action
+                                        アクション
                                     </th>
                                 </tr>
                             </thead>
@@ -371,7 +359,7 @@
             "processing": true,
             "serverSide": true,
             "language": {
-                "sSearch": "Search Fullname:"
+                "sSearch": "氏名検索:"
             },
             "ajax": {
                 "url": '{{ route('get-all-restoring-account') }}',
@@ -385,19 +373,7 @@
                     "data": "fullname"
                 },
                 {
-                    "data": "dob"
-                },
-                {
-                    "data": "address"
-                },
-                {
                     "data": "email"
-                },
-                {
-                    "data": "company"
-                },
-                {
-                    "data": "department"
                 },
                 {
                     "data": "status"
@@ -421,73 +397,19 @@
             },
         });
 
-        //GET VEHICLE TYPE INFO
-        const view = (id) => {
-            $.ajax({
-                url: "/get-users-info-by-id/" + id,
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                type: "GET",
-                beforeSend: function() {
-                    processObject.showProcessLoader();
-                },
-                success: function(data) {
-                    console.log(data[0].persons_info);
-                    if (data.success) {
-                        $('#view_user_modal')
-                            .find('.modal-header > h5')
-                            .text("View Account Details").end()
-                            .modal('show');
-                        // $('#update_id').val(data.data.id);
-                        $('#show_avatar').attr('src', '../assets/images/default-user-image.webp');
-                        $('#show_full_name').text(data[0].first_name + " " + data[0]
-                            .middle_name + " " + data[0].last_name);
-                        $('#show_email').text(data[0].user.email);
-                        $('#show_contact').text(data[0].telephone_number);
-                        $('#show_sex').text(data[0].gender);
-                        $('#show_dob').text(data[0].date_of_birth);
-                        $('#show_civil_status').text(data[0].civil_status);
-                        $('#show_address').text(data[0].home_address);
-                        $('#show_barangay').text(data[0].barangay);
-                        $('#show_religion').text(data[0].religion);
-                        $('#show_city').text(data[0].city_mun);
-                        $('#show_province').text(data[0].province);
-                        $('#show_region').text(data[0].region);
-
-                    } else {
-                        Swal.fire({
-                            title: "Oops! something went wrong.",
-                            text: data.messages,
-                            icon: 'success'
-                        })
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    swal.fire({
-                        title: "Oops! something went wrong.",
-                        text: errorThrown,
-                        icon: 'success'
-                    })
-                },
-                complete: function() {
-                    processObject.hideProcessLoader();
-                },
-            });
-        }
-
+    
 
 
         //DELETE EVENT
         const restoreAccount = (id) => {
-            // const url = '{{ route('get-drivers') }}';
             Swal.fire({
-                title: 'Restore Account?',
+                title: 'アカウントの初期化?',
                 icon: 'warning',
-                text: "You won't be able to revert this!",
+                text: "元に戻すことはできません",
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
+                cancelButtonText: "キャンセル",   
                 confirmButtonText: 'Yes, Restore it!'
             }).then((result) => {
                 if (result.value) {
@@ -511,18 +433,18 @@
                                 });
                             } else {
                                 Swal.fire({
-                                    title: "Oops! Something went wrong.",
+                                    title: "予期しないエラーが発生いたしました。",
                                     icon: 'error',
                                     html: "<b>" + data
                                         .messages +
-                                        "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                        "! <br>もしくは管理業者までお問い合わせお願い致します。</b>",
                                     type: "error",
                                 });
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             swal.fire({
-                                title: "Oops! something went wrong.",
+                                title: "予期しないエラーが発生いたしました。",
                                 text: errorThrown,
                                 icon: 'success'
                             })
@@ -536,67 +458,4 @@
         };
     </script>
 
-    <script>
-        //Start of Function for Address
-        let myData = data;
-        let region = '';
-        let province = '';
-        let counter = 1;
-        $(document).ready(function() {
-            addressAutoFill('#region', '#province', '#city', '#barangay');
-            addressAutoFill('#region-2', '#province-2', '#city-2', '#barangay-2');
-        });
-
-
-        function addressAutoFill(selectRegion, selectProvince, selectCity, selectBarangay) {
-            var $select = $(selectRegion);
-            $.each(myData, function(index, value) {
-                $select.append('<option value="' + index + '">' + value.region_name + '</option>');
-            });
-
-            $(selectRegion).on('change', function() {
-                var selectedRegion = $(this).children("option:selected").val();
-                region = selectedRegion;
-                var $select = $(selectProvince);
-                var $select_city = $(selectCity);
-                var $select_brgy = $(selectBarangay);
-                $select.empty()
-                $select_city.empty()
-                $select_brgy.empty()
-                $select.append('<option value="" disabled selected>Select.....</option>');
-                $select_city.append('<option value="" disabled selected>Select.....</option>');
-                $select_brgy.append('<option value="" disabled selected>Select.....</option>');
-                $.each(myData[selectedRegion].province_list, function(index, value) {
-                    $select.append('<option value="' + index + '">' + index + '</option>');
-                });
-            });
-
-            $(selectProvince).on('change', function() {
-                var selectedProvince = $(this).children("option:selected").val();
-                province = selectedProvince;
-                var $select = $(selectCity);
-                var $select_brgy = $(selectBarangay);
-                $select.empty()
-                $select_brgy.empty()
-                $select.append('<option value="" disabled selected>Select.....</option>');
-                $select_brgy.append('<option value="" disabled selected>Select.....</option>');
-                $.each(myData[region].province_list[selectedProvince].municipality_list, function(index, value) {
-                    $select.append('<option value="' + index + '">' + index + '</option>');
-                });
-            });
-
-            $(selectCity).on('change', function() {
-                var selectedCity = $(this).children("option:selected").val();
-                var $select = $(selectBarangay);
-                $select.empty()
-                $select.append('<option value="" disabled selected>Select.....</option>');
-                $.each(myData[region].province_list[province].municipality_list[selectedCity].barangay_list,
-                    function(index, value) {
-                        $select.append('<option value="' + value + '">' + value + '</option>');
-                    });
-
-            });
-        }
-        //End of Function for Address
-    </script>
 @endsection

@@ -202,6 +202,7 @@ return [
         Kreait\Laravel\Firebase\ServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         App\Providers\GoogleStorageProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         // Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
@@ -218,6 +219,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        // 'JWTAuthFactory' => Tymon\JWTAuth\Facades\JWTAuthFactory::class,
     ])->toArray(),
 
 ];

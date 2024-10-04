@@ -26,14 +26,16 @@ class CompanyController extends Controller
 
     public function manage_company()
     {
-        return view('company.manage-company',
-        [
-            'title' => "Company Management",
-            'subtitle' => "Company Management",
-            'table_title' => "List of Company",
-            'module' => "",
-            'label' => "A system refers to a collection or database of companies or organizations that are registered or recognized within the system. This list helps in managing and organizing information related to different companies and their associated data. The specific details included in the list can vary depending on the system's purpose and requirements."
-        ]);
+        return view(
+            'company.manage-company',
+            [
+                'title' => "Company Management",
+                'subtitle' => "Company Management",
+                'table_title' => "会社一覧",
+                'module' => "",
+                'label' => "システムとは、システム内に登録または認識されている企業または組織の集合またはデータベースを指します。このリストは、さまざまな企業とその関連データに関連する情報を管理および整理するのに役立ちます。リストに含まれる具体的な詳細は、システムの目的と要件によって異なる場合があります。"
+            ]
+        );
     }
 
     public function getAllDepartment(Request $request)
@@ -82,30 +84,29 @@ class CompanyController extends Controller
         if (!empty($company)) {
             foreach ($company as $company) {
 
-                if (Gate::allows('permission', 'deleteCompany'))
-                {
-                $btnDelete = '<button onclick="removeCompanyRecord(' . $company->id . ')" type="button" class="btn btn-danger btn-icon-text p-2" fdprocessedid="613cnk">                                                 
-                            Delete
+                if (Gate::allows('permission', 'deleteCompany')) {
+                    $btnDelete = '<button onclick="removeCompanyRecord(' . $company->id . ')" type="button" class="btn btn-danger btn-icon-text p-2" fdprocessedid="613cnk">                                                 
+                            
+消去
                           </button>';
                 }
 
-                if (Gate::allows('permission', 'updateCompany'))
-                {
-                $btnUpdate = '<button type="button" onclick="update(' . $company->id . ')" class="btn btn-info btn-icon-text p-2" fdprocessedid="613cnk">                                                 
-                              Update
+                if (Gate::allows('permission', 'updateCompany')) {
+                    $btnUpdate = '<button type="button" onclick="update(' . $company->id . ')" class="btn btn-info btn-icon-text p-2" fdprocessedid="613cnk">                                                 
+                              アップデート
                           </button>';
                 }
 
 
                 if ($company->status == '1') {
-                    $status = '<span class="badge badge-success">Active</span>';
+                    $status = '<span class="badge badge-success">アクティブ</span>';
                 } else {
-                    $status = '<span class="badge badge-danger">Inactive</span>';
+                    $status = '<span class="badge badge-danger">非アクティブ</span>';
                 }
 
                 $buttons = $btnUpdate . " " . $btnDelete;
                 $department_list = CompanyHasDepartment::with(['departmentsInfo'])->where('status', '1')->where('company_id', $company->id)->get();
-                $personIncharge = CompanyHasPersonIncharge::where('status', '1')->where('company_id',$company->id)->get();
+                $personIncharge = CompanyHasPersonIncharge::where('status', '1')->where('company_id', $company->id)->get();
                 $nestedData['arr'] =  $department_list;
                 $nestedData['person_incharge'] = $personIncharge;
                 $nestedData['company_code'] = $company->company_code;
@@ -134,16 +135,16 @@ class CompanyController extends Controller
     public function saveNewCompany(Request $request)
     {
 
-          //Variables for generated document code
-          $current_date = Carbon::today();
-          $year = $current_date->year;
-          $day = $current_date->day;
-          $month = $current_date->month;
+        //Variables for generated document code
+        $current_date = Carbon::today();
+        $year = $current_date->year;
+        $day = $current_date->day;
+        $month = $current_date->month;
 
         $company = new CompanyProfile();
         $companyHasDepartments = new CompanyHasDepartment();
         $personIncharge = new CompanyHasPersonIncharge();
-      
+
         try {
             DB::beginTransaction();
             $company->company_code = '';
@@ -159,16 +160,18 @@ class CompanyController extends Controller
             $company->save();
 
             $department_list = $request['add_department_multiselect'];
-            foreach($department_list as $departments){
+
+            // dd($department_list);
+            foreach ($department_list as $departments) {
                 $companyHasDepartments = new CompanyHasDepartment();
-                $companyHasDepartments->company_id =$company->id;
+                $companyHasDepartments->company_id = $company->id;
                 $companyHasDepartments->department_id = $departments;
                 $companyHasDepartments->status = '1';
                 $companyHasDepartments->save();
             }
 
             // $generate_code = 'COM' . str_pad($day . substr($year, -2) . $month .  $company->id, 6, '0', STR_PAD_LEFT);
-            $company->company_code =  generateCode('COMP',$company->id);
+            $company->company_code =  generateCode('COMP', $company->id);
             $company->save();
 
             $personIncharge->employee_no = convertData($request['add_emp_num']);
@@ -179,26 +182,26 @@ class CompanyController extends Controller
             $personIncharge->home_address = convertData($request['add_person_address']);
             $personIncharge->contact_number = convertData($request['add_person_contact_number']);
             $personIncharge->email = $request['add_person_email'];
-            $personIncharge->status = '1';           
+            $personIncharge->status = '1';
             $personIncharge->save();
-            $message = 'Record successfully Added!';
-           
+            $message = '追加場所を保存しました';
+
             DB::commit();
 
-            return response()->json(array('success'=> true, 'messages'=>$message));
+            return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
         }
     }
     public function updateCompanyRecord(Request $request)
     {
-      
+
         // $companyHasDepartment = CompanyHasDepartment::with(['officialReceipt', 'certificateOfRegistration', 'vehicleInfo'])->where('status', '1')->where('vehicle_info_id', $request['update_id'])->first();
         // return response()->json(array($request['update_id']));
         $company = CompanyProfile::findOrFail($request['update_id']);
         $companyHasDepartments = CompanyHasDepartment::where('company_id', $company->id)->get();
-        $personIncharge = CompanyHasPersonIncharge::where('company_id',$company->id)->first();
+        $personIncharge = CompanyHasPersonIncharge::where('company_id', $company->id)->first();
 
         // $vehicle = VehicleType::findOrFail($request['update_id']);
         $message = '';
@@ -215,16 +218,16 @@ class CompanyController extends Controller
             $company->tel_number = convertData($request['update_tel_number']);
             $company->save();
 
-         
-            foreach($companyHasDepartments as $companyHasDepartments){
+
+            foreach ($companyHasDepartments as $companyHasDepartments) {
                 $companyHasDepartments->delete();
             }
 
-            
+
             $department_list = $request['update_department_multiselect'];
-            foreach($department_list as $departments){
+            foreach ($department_list as $departments) {
                 $companyHasDepartments = new CompanyHasDepartment();
-                $companyHasDepartments->company_id =$company->id;
+                $companyHasDepartments->company_id = $company->id;
                 $companyHasDepartments->department_id = $departments;
                 $companyHasDepartments->status = '1';
                 $companyHasDepartments->save();
@@ -236,7 +239,7 @@ class CompanyController extends Controller
             $personIncharge->last_name = convertData($request['update_last_name']);
             $personIncharge->home_address = convertData($request['update_person_address']);
             $personIncharge->contact_number = convertData($request['update_person_contact_number']);
-            $personIncharge->email = $request['update_person_email'];         
+            $personIncharge->email = $request['update_person_email'];
             $personIncharge->save();
 
             // $user = User::where('id', $id)->firstorfail()->delete();
@@ -247,45 +250,64 @@ class CompanyController extends Controller
             return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
         }
     }
 
+    public function resetCounter(Request $request)
+    {
+        try {
+
+            DB::beginTransaction();
+            $company = CompanyProfile::findOrFail($request['company_id']);
+            $company->reset_counter_start_date = convertData($request['reset_start_date']);
+            $company->save();
+            $message = 'Record successfully Updated!';
+
+            DB::commit();
+            return response()->json(array('success' => true, 'messages' => $message));
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
+        }
+    }
+
+
     public function removeCompanyRecord(Request $request, $id)
     {
-  
+
         $company = CompanyProfile::where('status', '1')->findOrFail($id);
         $companyHasDepartment = CompanyHasDepartment::where('company_id', $company->id)->get();
-        $personIncharge = CompanyHasPersonIncharge::where('company_id',$company->id)->first();
-  
-          try {
-              DB::beginTransaction();
-              if($company->status == '1') {
-                  // $driver->reason_for_deletion = convertData('NONE');
-                  $company->status = '0';
-                  $personIncharge->status = '0';
+        $personIncharge = CompanyHasPersonIncharge::where('company_id', $company->id)->first();
 
-                  foreach($companyHasDepartment as $companyHasDepartment){
+        try {
+            DB::beginTransaction();
+            if ($company->status == '1') {
+                // $driver->reason_for_deletion = convertData('NONE');
+                $company->status = '0';
+                $personIncharge->status = '0';
+
+                foreach ($companyHasDepartment as $companyHasDepartment) {
                     $companyHasDepartment->status = '0';
                     $companyHasDepartment->save();
                 }
                 //   $companyHasDepartment->status = '0';
-                  $message = 'Record Successfully Deleted!';
-                  $action = 'DELETED';
-              } 
-              //$changes = $driver->getDirty();
-              $company->save();
-              $personIncharge->save();
-              $companyHasDepartment->save();
-              DB::commit();
-              //action_log('Department mngt', $action, array_merge(['id' => $department->id], $changes));
-  
-              return response()->json(array('success'=> true, 'messages'=>$message));
-          } catch (\PDOException $e) {
-              DB::rollBack();
-              return response()->json(array('success'=> false, 'error'=>'SQL error!', 'messages'=>'Transaction failed!'));
-          }
-      }
+                $message = 'Record Successfully Deleted!';
+                $action = 'DELETED';
+            }
+            //$changes = $driver->getDirty();
+            $company->save();
+            $personIncharge->save();
+            $companyHasDepartment->save();
+            DB::commit();
+            //action_log('Department mngt', $action, array_merge(['id' => $department->id], $changes));
+
+            return response()->json(array('success' => true, 'messages' => $message));
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -318,8 +340,8 @@ class CompanyController extends Controller
     {
         $company = CompanyProfile::where('status', '1')->findOrFail($id);
         $department_list = CompanyHasDepartment::with(['departmentsInfo'])->where('status', '1')->where('company_id', $company->id)->get();
-        $personIncharge = CompanyHasPersonIncharge::where('status','1')->where('company_id',$company->id)->first();
-        return response()->json(array('success' => true,'company_profile'=> $company,'department_info'=>$department_list,'person_incharge'=> $personIncharge));   
+        $personIncharge = CompanyHasPersonIncharge::where('status', '1')->where('company_id', $company->id)->first();
+        return response()->json(array('success' => true, 'company_profile' => $company, 'department_info' => $department_list, 'person_incharge' => $personIncharge));
         // return response()->json(array('success' => true, 'messages' => 'Record successfully retrieved!', 'data' => $companyHasDepartment));
     }
 

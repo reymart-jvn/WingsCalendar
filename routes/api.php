@@ -13,33 +13,69 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::post('/oauth/token', [
         'uses' => '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken',
         'as' => 'passport.token',
         'middleware' => 'throttle',
-    ]);
-Route::get('test', function(){
+]);
+Route::get('test', function () {
         return "test";
 })->name('test');
 
 Route::prefix('auth')->group(function () {
         Route::post('/app_login', 'App\Http\Controllers\API\LoginController@login')->name('app_login');
-        Route::get('/get_schedule/{id}', 'App\Http\Controllers\API\DriverController@getDriverScheduleList')->name('get_schedule');
-        Route::get('/get_schedule_done/{id}', 'App\Http\Controllers\API\DriverController@getDriverScheduleListDone')->name('get_schedule_done');
-        Route::get('/get_schedule_today/{id}', 'App\Http\Controllers\API\DriverController@getDriverScheduleListToday')->name('get_schedule_today');
-        Route::get('/get_schedule_month/{id}', 'App\Http\Controllers\API\DriverController@getDriverScheduleListMonth')->name('get_schedule_month');
-        Route::get('/get_schedule_no_approval/{id}', 'App\Http\Controllers\API\DriverController@getDriverScheduleListWithoutForApproval')->name('get_schedule_no_approval');
-        Route::post('/start_travel/{id}/{datetime}/{devicecode}', 'App\Http\Controllers\API\DriverController@startTravel')->name('start_travel');
-        Route::post('/start_travel_code/{id}', 'App\Http\Controllers\API\DriverController@startTravelByCode')->name('start_travel_code');
-        Route::post('/end_travel/{id}/{datetime}', 'App\Http\Controllers\API\DriverController@endTravel')->name('end_travel');
-        Route::post('/cancel_travel/{id}/{datetime}', 'App\Http\Controllers\API\DriverController@cancelTravel')->name('cancel_travel');
-        Route::post('/end_travel_code/{id}', 'App\Http\Controllers\API\DriverController@endTravelByCode')->name('end_travel_code');
-        Route::post('/change_password', 'App\Http\Controllers\API\DriverController@changePassword')->name('change_password');
-        Route::post('/update_attendance', 'App\Http\Controllers\API\PassengerController@updateAttendance')->name('update_attendance');
-        Route::post('/check-transferee', 'App\Http\Controllers\API\PassengerController@checkIfTransfereePassenger')->name('check-transferee');
-        Route::post('/save-transferee', 'App\Http\Controllers\API\PassengerController@saveTransfereePassenger')->name('save-transferee');
-        Route::get('/get_driver_failed_trip/{id}', 'App\Http\Controllers\API\DriverController@getDriverFailedTrip')->name('get_driver_failed_trip');
-        Route::get('/check_driver_ongoing/{id}', 'App\Http\Controllers\API\DriverController@checkIfDriverHasOngoing')->name('check_driver_ongoing');
-        Route::post('/purchase_order_request/{id}/{companyid}/{category}/{amountrequested}','App\Http\Controllers\API\PurchaseOrderRequestController@storePurchaseOrderRequest')->name('purchase_order_request');
-        Route::get('/get_purchase_transaction_history/{id}','App\Http\Controllers\API\PurchaseOrderRequestController@getPurchaseOrderTransaction')->name('get_purchase_transaction_history');
+        Route::get('/get-all-event-activity', 'App\Http\Controllers\API\EventActivityController@index');
+        Route::get('/get-incharge/{event_activiti_id}/{availability}', 'App\Http\Controllers\API\EventActivityController@assignPersonsInCharge');
+        Route::post('/app-registration', 'App\Http\Controllers\API\RegistrationController@store')->name('app-registration');
+        Route::post('/app-registration-admin', 'App\Http\Controllers\API\RegistrationAdminController@store')->name('app-registration-admin');
+        Route::post('/check-email-if-exist', 'App\Http\Controllers\API\RegistrationController@checkemail');
+        Route::post('/check-company-if-exist', 'App\Http\Controllers\API\RegistrationController@checkcompanypasscode');
+});
+
+Route::group(['middleware' => ['jwt.auth']], function () {
+        Route::namespace('App\Http\Controllers\API')->group(function () {
+
+
+                Route::prefix('company')->group(function () {
+                        Route::get('/get-all-company/{issuperadmin}/{company}', 'CompanyController@index');
+                });
+
+                Route::prefix('locations')->group(function () {
+                        Route::get('/get-all-locations/{issuperadmin}/{company}', 'LocationsController@index');
+                        Route::get('/get-all-locations-by-company/{company}', 'LocationsController@getLocationsByCompany');
+                        Route::get('/get-latest-locations/{issuperadmin}/{company}', 'LocationsController@getLatestLocationsData');
+                        Route::post('/save-new-location', 'LocationsController@store');
+                        Route::post('/update-location', 'LocationsController@update');
+                        Route::post('/delete-location', 'LocationsController@destroy');
+                });
+
+                Route::prefix('activity')->group(function () {
+                        Route::get('/get-all-activity/{issuperadmin}/{company}', 'ActivityController@index');
+                        Route::get('/get-all-activity-by-company/{company}', 'ActivityController@getActivityByCompany');
+                        Route::get('/get-latest-activity/{issuperadmin}/{company}', 'ActivityController@getLatestActivityData');
+                        Route::post('/save-new-activity', 'ActivityController@store');
+                        Route::post('/update-activity', 'ActivityController@update');
+                        Route::post('/delete-activity', 'ActivityController@destroy');
+                });
+
+                Route::prefix('personincharge')->group(function () {
+                        Route::get('/get-all-personincharge/{issuperadmin}/{company}', 'PersonInChargeController@index');
+                        Route::get('/get-latest-personincharge/{issuperadmin}/{company}', 'PersonInChargeController@getLatestPersonInChargeData');
+                        Route::post('/save-new-personincharge', 'PersonInChargeController@store');
+                        Route::post('/update-personincharge', 'PersonInChargeController@update');
+                        Route::post('/delete-personincharge', 'PersonInChargeController@destroy');
+                });
+
+                Route::prefix('eventsactivity')->group(function () {
+                        Route::get('/get-all-event-activity/{issuperadmin}/{company}', 'EventActivityController@index');
+                        Route::get('/get-today-event-activity/{issuperadmin}/{company}', 'EventActivityController@getTodayEventsActivity');
+                        Route::get('/get-today-event-activity-by-user', 'EventActivityController@getTodayEventsActivityByUser');
+                        Route::get('/get-month-event-activity/{issuperadmin}/{company}', 'EventActivityController@getMonthEventsActivity');
+                        Route::get('/get-month-event-activity-by-company/{id}', 'EventActivityController@getMonthEventsActivityByCompany');
+                        Route::post('/save-new-events-activity', 'EventActivityController@store');
+                        Route::post('/cancel-events-activity', 'EventActivityController@cancelEventActivity');
+                        Route::get('/get-daterange-event-activity/{from}/{to}', 'EventActivityController@getEventsActivityDateRange');
+                });
+        });
 });

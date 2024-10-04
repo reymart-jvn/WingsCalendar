@@ -281,9 +281,9 @@ $(document).ready(function() {
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     swal.fire({
-                        title: "Oops! something went wrong.",
+                        title: "入力に間違いがあります。",
                         html: "<b>" + errorThrown +
-                            "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                            "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                         type: "error",
                         footer: '<a href = "mailto: enterprise.cabuyao@gmail.com">Send an email to us!</a>'
                     });

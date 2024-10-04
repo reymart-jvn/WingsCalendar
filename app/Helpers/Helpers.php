@@ -86,6 +86,17 @@ function access_level()
     }
 }
 
+function is_super_admin()
+{
+    $user = Auth::user();
+    $employee = Employee::with('employeeHasPosition.employeePositionHasPermissionAccess')->where('user_id', $user->id)->first();
+    if ($employee->employeeHasPosition->employeePositionHasPermissionAccess->permission_has_access_id == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 function getCompanyName()
 {
@@ -95,6 +106,20 @@ function getCompanyName()
     // });
     $getCompany = PersonHasCompanyDepartment::with('companyProfile')->where('person_id', $user->person_id)->first();
     return $getCompany->companyProfile->company_name;
+}
+
+function getCompanyCode()
+{
+    $user = Auth::user();
+    $getCompany = PersonHasCompanyDepartment::with('companyProfile')->where('person_id', $user->person_id)->first();
+    return $getCompany->companyProfile->company_code;
+}
+
+function getCompanyResetCounterDate()
+{
+    $user = Auth::user();
+    $getCompany = PersonHasCompanyDepartment::with('companyProfile')->where('person_id', $user->person_id)->first();
+    return $getCompany->companyProfile->reset_counter_start_date;
 }
 
 function checkPassword($password)

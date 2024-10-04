@@ -28,6 +28,12 @@ class DepartmentSeeder extends Seeder
                 'description' => 'HUMAN RESOURCES',
                 'status' => '1',
             ],
+            [
+                'name' => 'EVENT OPERATIONS',
+                'acronym' => 'EOP',
+                'description' => 'EVENT OPERATIONS',
+                'status' => '1',
+            ],
         ]);
     }
 }

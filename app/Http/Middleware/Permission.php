@@ -22,28 +22,20 @@ class Permission
         $actions = array_slice(func_get_args(), 2);
         
         foreach($actions as $action){
-        // $employee = User::with('person','employee.employeeHasPosition.employeePositionHasPermissionAccess.permissionHasAccess.access')->where('person_id',Auth::user()->person_id)->first();
-        // $accesses =  $employee->employee->employeeHasPosition->employeePositionHasPermissionAccess->permissionHasAccess->access->access_list;
-        // $accesses_status =  $employee->employee->employeeHasPosition->employeePositionHasPermissionAccess->permissionHasAccess->access->status; 
-        $employee = Cache::remember('per_employee', 60*60*60, function (){
-            return User::with('person','employee.employeeHasPosition.employeePositionHasPermissionAccess.permissionHasAccess.access')->where('person_id',Auth::user()->person_id)->first();
-        });
-        $accesses = Cache::remember('per_accesses', 60*60*60, function () use ($employee) {
-            return $employee->employee->employeeHasPosition->employeePositionHasPermissionAccess->permissionHasAccess->access->access_list;
-        });
-        $accesses_status = Cache::remember('per_accesses_status', 60*60*60, function () use($employee) {
-            return $employee->employee->employeeHasPosition->employeePositionHasPermissionAccess->permissionHasAccess->access->status;
-        });
-        
-            $check = ($employee)? unserialize($accesses) : null;
 
-            if($check != null){
-                if(in_array($action, unserialize($accesses)) && $accesses_status == '1'){
-                    return $next($request);
+
+            $employee = User::with('person','employee.employeeHasPosition.employeePositionHasPermissionAccess.permissionHasAccess.access')->where('person_id',Auth::user()->person_id)->first();
+            $accesses =  $employee->employee->employeeHasPosition->employeePositionHasPermissionAccess->permissionHasAccess->access->access_list;
+            $accesses_status =  $employee->employee->employeeHasPosition->employeePositionHasPermissionAccess->permissionHasAccess->access->status;  
+                $check = ($employee)? unserialize($accesses) : null;
+    
+                if($check != null){
+                    if(in_array($action, unserialize($accesses)) && $accesses_status == '1'){
+                        return $next($request);
+                    }
                 }
             }
-        }
         abort(403);
-        return $next($request);
+        // return $next($request);
     }
 }

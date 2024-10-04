@@ -30,9 +30,9 @@ class PermissionController extends Controller
             [
                 'title' => "Permission Management",
                 'subtitle' => "Permission Management",
-                'table_title' => "List of Permissions",
+                'table_title' => "アクセス許可の一覧",
                 'module' => "",
-                'label' => "A collection of specific access rights or privileges that can be assigned to users or user groups within the system. It outlines the actions, operations, or functionalities that users are allowed or restricted to perform."
+                'label' => "システム内のユーザーまたはユーザー グループに割り当てることができる、特定のアクセス権または特権の集合。ユーザーが実行を許可または制限されているアクション、操作、または機能の概要を示します。"
             ]
         );
     }
@@ -43,11 +43,11 @@ class PermissionController extends Controller
         return view(
             'permission.create-permission',
             [
-                'title' => "Create Permissions",
-                'subtitle' => "Create Permissions",
-                'table_title' => "Create Permissions",
+                'title' => "権限の作成",
+                'subtitle' => "権限の作成",
+                'table_title' => "権限の作成",
                 'module' => "document_categories_mngt",
-                'label' => "A process of defining and assigning access rights or privileges to different users or user groups within the system. Permissions are used to control what actions or functionalities a user can perform within the system and what data they can access."
+                'label' => "システム内のさまざまなユーザーまたはユーザー グループにアクセス権または特権を定義して割り当てるプロセス。権限は、ユーザーがシステム内で実行できるアクションや機能、およびアクセスできるデータを制御するために使用されます。"
             ]
         );
     }
@@ -95,12 +95,6 @@ class PermissionController extends Controller
             })->offset($start)
                 ->limit($limit)
                 ->get();
-
-            // $permission = with(clone $query)->where('permission_description', 'LIKE', "%{$search}%")
-            //     ->offset($start)
-            //     ->limit($limit)
-            //     // ->orderBy($order, $dir)
-            //     ->get();
             $totalFiltered = with(clone $query)->count();
         }
 
@@ -112,13 +106,13 @@ class PermissionController extends Controller
                     if (Gate::allows('permission', 'deletePermission')) {
                         $btnDeleteRestore = '<button onclick="removePermissionRecord(' . $permission->permission_id . ')" type="button" class="btn btn-danger btn-icon-text p-2" fdprocessedid="613cnk">
                                                               
-                    Delete
+                    消去
                   </button>';
                     }
                 } else {
                     if (Gate::allows('permission', 'restorePermission')) {
                     $btnDeleteRestore = '<button onclick="restorePermissionRecord(' . $permission->permission_id . ')" type="button" class="btn btn-warning btn-icon-text p-2" fdprocessedid="613cnk">                           
-                    Restore
+                    復元する
                   </button>';
                     }
                 }
@@ -132,15 +126,15 @@ class PermissionController extends Controller
                 if (Gate::allows('permission', 'updatePermission')) {
                 $btnUpdate = '<button type="button" onclick="update(' . $permission->permission_id . ')" class="btn btn-info btn-icon-text p-2" fdprocessedid="613cnk">
                                                                       
-                             Update
+                             アップデート
                          </button>';
                 }
 
 
                 if ($permission->status == '1') {
-                    $status = '<span class="badge badge-success">Active</span>';
+                    $status = '<span class="badge badge-success">アクティブ</span>';
                 } else {
-                    $status = '<span class="badge badge-danger">Inactive</span>';
+                    $status = '<span class="badge badge-danger">活動しない</span>';
                 }
 
                 // $btnUpdate = '<button onclick="edit('.$driver->id.')"  type="button" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-xs p-1.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800">
@@ -189,7 +183,7 @@ class PermissionController extends Controller
             $permission->permission_code = "";
             $permission->permission_description = convertData($request['position_level_access']);
             $permission->status = "1";
-            $message = 'Record successfully Added!';
+            $message = '追加場所を保存しました';
             $permission->save();
 
             $generate_permission_code = 'PER' . str_pad($day . substr($year, -2) . $month .  $permission->id, 6, '0', STR_PAD_LEFT);
@@ -223,7 +217,7 @@ class PermissionController extends Controller
             return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
         }
     }
 
@@ -263,7 +257,7 @@ class PermissionController extends Controller
             return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
         }
     }
 
@@ -299,7 +293,7 @@ class PermissionController extends Controller
             return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
         }
     }
 
@@ -335,7 +329,7 @@ class PermissionController extends Controller
             return response()->json(array('success' => true, 'messages' => $message));
         } catch (\PDOException $e) {
             DB::rollBack();
-            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'Transaction failed!'));
+            return response()->json(array('success' => false, 'error' => 'SQL error!', 'messages' => 'エラー'));
         }
     }
     /**

@@ -84,7 +84,7 @@
                                         </span>
                                     </div>
                                     <input type="text" class="form-control" id="reports_date_from"
-                                        name="reports_date_from" placeholder="Date From">
+                                        name="reports_date_from" placeholder="データフォーム">
                                 </div>
 
                             </div>
@@ -183,7 +183,7 @@
                                                 </span>
                                             </div>
                                             <input type="text" class="form-control" id="date_from" name="date_from"
-                                                placeholder="Date From">
+                                                placeholder="データフォーム">
                                         </div>
 
                                     </div>
@@ -410,7 +410,7 @@
             Swal.fire({
                 title: 'Do you want to print?',
                 icon: 'warning',
-                text: "You won't be able to revert this!",
+                text: "元に戻すことはできません",
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
@@ -764,7 +764,7 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     swal.fire({
-                        title: "Oops! something went wrong.",
+                        title: "入力に間違いがあります。",
                         text: errorThrown,
                         icon: 'success'
                     })
@@ -983,7 +983,7 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     swal.fire({
-                        title: "Oops! something went wrong.",
+                        title: "入力に間違いがあります。",
                         text: errorThrown,
                         icon: 'success'
                     })
@@ -1341,7 +1341,7 @@
             Swal.fire({
                 title: 'Generate passengers qr code?',
                 icon: 'warning',
-                // text: "The ticket number will save. You won't be able to revert this!",
+                // text: "The ticket number will save. 元に戻すことはできません",
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
@@ -1398,9 +1398,9 @@
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             swal.fire({
-                                title: "Oops! something went wrong.",
+                                title: "入力に間違いがあります。",
                                 html: "<b>" + errorThrown +
-                                    "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                    "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                                 type: "error",
                                 footer: '<a href = "mailto: enterprise.cabuyao@gmail.com">Send an email to us!</a>'
                             });
@@ -1474,11 +1474,11 @@
 
                     } else {
                         swal.fire({
-                            title: "Oops! something went wrong.",
+                            title: "入力に間違いがあります。",
                             icon: "error",
                             html: "<b>" + data
                                 .messages +
-                                "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                             type: "error",
                             footer: ''
                         });
@@ -1486,7 +1486,7 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     swal.fire({
-                        title: "Oops! something went wrong.",
+                        title: "入力に間違いがあります。",
                         text: errorThrown,
                         icon: 'success'
                     })

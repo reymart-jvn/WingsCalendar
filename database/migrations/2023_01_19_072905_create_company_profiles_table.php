@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('contact_number')->nullable();
             $table->string('tel_number')->nullable();
             $table->string('description')->nullable();
+            $table->string('reset_counter_start_date')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

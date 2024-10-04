@@ -21,39 +21,31 @@
                     <p class="card-description">
                         {{ $label }}
                     <div class="table-responsive pt-3">
-                        <table class="table table-hover" id="table_id">
+                        <table class="table table-hover" id="table_id" width="100%">
                             <thead>
                                 <tr>
 
                                     <th>
-                                        Full Name
+                                        氏名
                                     </th>
                                     {{-- <th>
                                         Date of Birth
                                     </th>
                                     <th>
                                         Address
-                                    </th>
-                                    <th>
-                                        Email
                                     </th> --}}
                                     <th>
-                                        Company
-                                    </th>
+                                        メールアドレス
+                                    </th> 
                                     <th>
-                                        Department
+                                        アクセスレベル
                                     </th>
+                                  
                                     <th>
-                                        Position
-                                    </th>
-                                    <th>
-                                        Level of Access
-                                    </th>
-                                    <th>
-                                        Status
+                                        ステータス
                                     </th>
                                     <th style="width: 200px;">
-                                        Action
+                                        アクション
                                     </th>
                                 </tr>
                             </thead>
@@ -68,12 +60,12 @@
 
     <!-- Modal-->
     <div class="modal fade" tabindex="-1" role="dialog" id="view_user_modal">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-xl"  role="document">
             <div class="modal-content">
-                <div class="modal-header bg-secondary text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">View Account Details</h5>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">アカウント詳細の表示</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" class="text-white">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -81,1522 +73,817 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="symbol symbol-50 symbol-xl-150">
-                                <img style="width: 80%;height:80%" id="show_avatar" />
+                                <img style="width: 70%;height:70%" id="show_avatar" />
                                 <i class="symbol-badge symbol-badge-bottom bg-success"></i>
                             </div>
 
                         </div>
 
-                        <div class="col-md-8">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Full Name:</label>
+                                <label for="">氏名:</label>
                                 <b>
                                     <p style="font-weight:bold; font-size:15" id="show_full_name" name="show_full_name">
                                     </p>
                                 </b>
                             </div>
                             <div class="form-group">
-                                <label for="">Email Address:</label>
+                                <label for="">メールアドレス:</label>
                                 <p style="font-weight:bold" id="show_email"></p>
                             </div>
                             <div class="form-group">
-                                <label for="">Mobile Number:</label>
-                                <p style="font-weight:bold" id="show_contact"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Sex:</label>
+                                <label for="">性別:</label>
                                 <p style="font-weight:bold" id="show_sex"></p>
                             </div>
-                            <div class="form-group">
-                                <label for="">Address:</label>
-                                <p style="font-weight:bold" id="show_address"></p>
-                            </div>
+                           
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Date of Birth:</label>
+                                <label for="">生年月日:</label>
                                 <p style="font-weight:bold" id="show_dob"></p>
                             </div>
                             <div class="form-group">
-                                <label for="">Barangay:</label>
-                                <p style="font-weight:bold" id="show_barangay"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Civil Status:</label>
-                                <p style="font-weight:bold" id="show_civil_status"></p>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Religion:</label>
-                                <p style="font-weight:bold" id="show_religion"></p>
+                                <label for="">住所:</label>
+                                <p style="font-weight:bold" id="show_address"></p>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">City:</label>
-                                <p style="font-weight:bold" id="show_city"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Province:</label>
-                                <p style="font-weight:bold" id="show_province"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Region:</label>
-                                <p style="font-weight:bold" id="show_region"></p>
-                            </div>
-                        </div>
-                    </div>
+                 
 
                     <hr>
-                    <div class="row">
-                        <div class="col-md-12">
-                            @if (Gate::allows('permission', 'viewAccount') ||
-                            Gate::allows('permission', 'viewMainSystemHeader') ||
-                            Gate::allows('permission', 'viewPermission'))
-                        <div class="accordion accordion-solid-header" id="accordion-4" role="tablist">
-                            <div class="card content-wrapper">
-                                <div class="card-header" role="tab" id="main-header-label">
-                                    <h6 class="mb-0">
-                                        <a style="font-size:120%;" data-bs-toggle="collapse" href="#main-header"
-                                            aria-controls="main-header" class="">
-                                            <i class="mdi mdi-octagon"> </i>&nbsp &nbsp MAIN SYSTEM PERMISSION
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="main-header" class="collapse" role="tabpanel"
-                                    aria-labelledby="main-header-label" data-bs-parent="#accordion-4" style="">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered">
-                                                    <thead>
-                                                        <tr role="row">
-                                                            <th class="sorting  text-center" style="width: 200px;">
-                                                                Sub-systems </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Create </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Update </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                View </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Delete </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Restore </th>
-                                                            <th class="sorting  text-center" style="width: 150px;">
-                                                                Reset Password</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-    
-                                                        <tr>
-                                                            <td>Main System</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            @if (Gate::allows('permission', 'viewMainSystemHeader'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="viewMainSystemHeader">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Account Management</td>
-                                                            @if (Gate::allows('permission', 'createAccount'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createAccount">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                            @if (Gate::allows('permission', 'updateAccount'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateAccount">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                            @if (Gate::allows('permission', 'viewAccount'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewAccount">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                            @if (Gate::allows('permission', 'deleteAccount'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteAccount">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                            @if (Gate::allows('permission', 'restoreAccount'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restoreAccount">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'resetAccount'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="resetAccount">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Permission Management</td>
-                                                            @if (Gate::allows('permission', 'createPermission'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createPermission">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updatePermission'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updatePermission">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewPermission'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewPermission">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deletePermission'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deletePermission">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restorePermission'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restorePermission">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'resetPermission'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="resetPermission">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                        </tr>
-    
-                                                    </tbody>
-                                                </table>
-                                            </div>
-    
-                                        </div>
+                    
+                        <h5 class="modal-title" id="exampleModalLabel">User Permissions</h5>
+                        <hr>
+                   
+                   
+                        @if (Gate::allows('permission', 'viewAccount') ||
+                                Gate::allows('permission', 'viewMainSystemHeader') ||
+                                Gate::allows('permission', 'viewPermission') || access_level() == 1)
+                            <div class="accordion accordion-solid-header" id="accordion-4" role="tablist">
+                                <div class="card content-wrapper">
+                                    <div class="card-header" role="tab" id="main-header-label">
+                                        <h6 class="mb-0">
+                                            <a style="font-size:120%;" data-bs-toggle="collapse" href="#main-header"
+                                                aria-controls="main-header" class="">
+                                                <i class="mdi mdi-octagon"> </i>&nbsp &nbsp MAIN SYSTEM PERMISSION
+                                            </a>
+                                        </h6>
                                     </div>
-    
+                                    <div id="main-header" class="collapse" role="tabpanel"
+                                        aria-labelledby="main-header-label" data-bs-parent="#accordion-4" style="">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead>
+                                                            <tr role="row">
+                                                                <th class="sorting  text-center" style="width: 200px;">
+                                                                    Sub-systems </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Create </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Update </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    View </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Delete </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Restore </th>
+                                                                <th class="sorting  text-center" style="width: 150px;">
+                                                                    Reset Password</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <tr>
+                                                                <td>Main System</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                @if (company() == 1)
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]"
+                                                                            value="viewMainSystemHeader">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                            </tr>
+
+                                                            @if (access_level() == 1)
+                                                            <tr>
+                                                                <td>Dashboard</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                @if (Gate::allows('permission', 'viewDashboard') || access_level() == 1)
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="viewDashboard">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                            </tr>
+                                                             @endif
+
+                                                            <tr>
+                                                                <td>Account Management</td>
+                                                                @if (Gate::allows('permission', 'createAccount'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="createAccount">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+                                                                @if (Gate::allows('permission', 'updateAccount'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="updateAccount">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+                                                                @if (Gate::allows('permission', 'viewAccount'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="viewAccount">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+                                                                @if (Gate::allows('permission', 'deleteAccount'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="deleteAccount">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+                                                                @if (Gate::allows('permission', 'restoreAccount'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="restoreAccount">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                @if (Gate::allows('permission', 'resetAccount'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="resetAccount">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Permission Management</td>
+                                                                @if (Gate::allows('permission', 'createPermission'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="createPermission">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                @if (Gate::allows('permission', 'updatePermission'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="updatePermission">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                @if (Gate::allows('permission', 'viewPermission'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="viewPermission">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                @if (Gate::allows('permission', 'deletePermission'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="deletePermission">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                @if (Gate::allows('permission', 'restorePermission'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="restorePermission">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                @if (Gate::allows('permission', 'resetPermission'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="resetPermission">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
-    
-                    @if (Gate::allows('permission', 'viewDriver') ||
-                            Gate::allows('permission', 'viewRequirement') ||
-                            Gate::allows('permission', 'viewComRequirement') ||
-                            Gate::allows('permission', 'viewShuttleHeader'))
-                        <div class="accordion accordion-solid-header" id="shuttle-card" role="tablist">
-                            <div class="card content-wrapper">
-                                <div class="card-header" role="tab" id="shuttle-header">
-                                    <h6 class="mb-0">
-                                        <a style="font-size:120%;" data-bs-toggle="collapse" href="#shuttle-collapse"
-                                            aria-controls="shuttle-collapse" class="">
-                                            <i class="mdi mdi-octagon"> </i>&nbsp &nbsp SHUTTLE MANAGEMENT
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="shuttle-collapse" class="collapse" role="tabpanel"
-                                    aria-labelledby="shuttle-header" data-bs-parent="#shuttle-card" style="">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered">
-                                                    <thead>
-                                                        <tr role="row">
-                                                            <th class="sorting  text-center" style="width: 200px;">
-                                                                Sub-systems </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Create </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Update </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                View </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Delete </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Restore </th>
-                                                            <th class="sorting  text-center" style="width: 150px;">
-                                                                Reset Password</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Shuttle Management Header</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            @if (Gate::allows('permission', 'viewShuttleHeader'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewShuttleHeader">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Driver's Management</td>
-                                                            @if (Gate::allows('permission', 'createDriver'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createDriver">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateDriver'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateDriver">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewDriver'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewDriver">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteDriver'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteDriver">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreDriver'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restoreDriver">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Requirement Management</td>
-    
-                                                            @if (Gate::allows('permission', 'createRequirement'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createRequirement">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateRequirement'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateRequirement">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewRequirement'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewRequirement">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteRequirement'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteRequirement">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreRequirement'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="restoreRequirement">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Compliance Requirement Management</td>
-                                                            @if (Gate::allows('permission', 'createComRequirement'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="createComRequirement">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateComRequirement'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="updateComRequirement">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewComRequirement'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="viewComRequirement">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteComRequirement'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="deleteComRequirement">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreComRequirement'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="restoreComRequirement">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                    </tbody>
-                                                </table>
-                                            </div>
-    
-                                        </div>
+                        @endif
+
+                             @if (Gate::allows('permission', 'viewCompanyHeader') ||
+                                Gate::allows('permission', 'viewCompany') ||
+                                Gate::allows('permission', 'viewDepartment') ||
+                                Gate::allows('permission', 'viewPosition') || access_level() == 1 )
+                            <div class="accordion accordion-solid-header" id="company-card" role="tablist">
+                                <div class="card content-wrapper">
+                                    <div class="card-header" role="tab" id="company-header">
+                                        <h6 class="mb-0">
+                                            <a style="font-size:120%;" data-bs-toggle="collapse" href="#company-collapse"
+                                                aria-controls="company-collapse" class="">
+                                                <i class="mdi mdi-octagon"> </i>&nbsp &nbsp COMPANY MANAGEMENT
+                                            </a>
+                                        </h6>
                                     </div>
-    
+                                    <div id="company-collapse" class="collapse" role="tabpanel"
+                                        aria-labelledby="company-header" data-bs-parent="#company-card" style="">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead>
+                                                            <tr role="row">
+                                                                <th class="sorting  text-center" style="width: 200px;">
+                                                                    Sub-systems </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Create </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Update </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    View </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Delete </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Restore </th>
+                                                                <th class="sorting  text-center" style="width: 150px;">
+                                                                    Reset Password</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Company Management Header</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                @if (Gate::allows('permission', 'viewCompanyHeader'))
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="viewCompanyHeader">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                            </tr>
+
+                                                            @if (access_level() == 1)
+                                                                <tr>
+                                                                    <td>Company Management</td>
+                                                                    @if (Gate::allows('permission', 'createCompany'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]" value="createCompany">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'updateCompany'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]" value="updateCompany">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'viewCompany'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]" value="viewCompany">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'deleteCompany'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]" value="deleteCompany">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'restoreCompany'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="restoreCompany">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+                                                                    <td class="text-center">-
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                            @if (access_level() == 1)
+                                                                <tr>
+                                                                    <td>Department Management</td>
+                                                                    @if (Gate::allows('permission', 'createDepartment'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="createDepartment">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'updateDepartment'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="updateDepartment">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'viewDepartment'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="viewDepartment">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'deleteDepartment'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="deleteDepartment">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'restoreDepartment'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="restoreDepartment">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+                                                                    <td class="text-center">-
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                            @if (access_level() == 1)
+                                                                <tr>
+                                                                    <td>Position Management</td>
+                                                                    @if (Gate::allows('permission', 'createPosition'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="createPosition">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'updatePosition'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="updatePosition">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'viewPosition'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]" value="viewPosition">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'deletePosition'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="deletePosition">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'restorePosition'))
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="restorePosition">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    <td class="text-center">-
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
-    
-                    @if (Gate::allows('permission', 'viewVehicleHeader') ||
-                            Gate::allows('permission', 'viewVehicleType') ||
-                            Gate::allows('permission', 'viewVehicle'))
-                        <div class="accordion accordion-solid-header" id="vehicle-card" role="tablist">
-                            <div class="card content-wrapper">
-                                <div class="card-header" role="tab" id="vehicle-header">
-                                    <h6 class="mb-0">
-                                        <a style="font-size:120%;" data-bs-toggle="collapse" href="#vehicle-collapse"
-                                            aria-controls="vehicle-collapse" class="">
-                                            <i class="mdi mdi-octagon"> </i>&nbsp &nbsp VEHICLE MANAGEMENT
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="vehicle-collapse" class="collapse" role="tabpanel"
-                                    aria-labelledby="vehicle-header" data-bs-parent="#vehicle-card" style="">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered">
-                                                    <thead>
-                                                        <tr role="row">
-                                                            <th class="sorting  text-center" style="width: 200px;">
-                                                                Sub-systems </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Create </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Update </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                View </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Delete </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Restore </th>
-                                                            <th class="sorting  text-center" style="width: 150px;">
-                                                                Reset Password</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Vehicle Management Header</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            @if (Gate::allows('permission', 'viewVehicleHeader'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewVehicleHeader">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Vehicle Type Management</td>
-                                                            @if (Gate::allows('permission', 'createVehicleType'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createVehicleType">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateVehicleType'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateVehicleType">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewVehicleType'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewVehicleType">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteVehicleType'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteVehicleType">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreVehicleType'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="restoreVehicleType">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Vehicle Management</td>
-                                                            @if (Gate::allows('permission', 'createVehicle'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createVehicle">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateVehicle'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateVehicle">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewVehicle'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewVehicle">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteVehicle'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteVehicle">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreVehicle'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restoreVehicle">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                            {{-- <td class="text-center"><input type="checkbox"
-                                                                    name="permission[]" value="createVehicle">
-                                                            </td>
-                                                            <td class="text-center"><input type="checkbox"
-                                                                    name="permission[]" value="updateVehicle">
-                                                            </td>
-                                                            <td class="text-center"><input type="checkbox"
-                                                                    name="permission[]" value="viewVehicle">
-                                                            </td>
-                                                            <td class="text-center"><input type="checkbox"
-                                                                    name="permission[]" value="deleteVehicle">
-                                                            </td>
-                                                            <td class="text-center"><input type="checkbox"
-                                                                    name="permission[]" value="restoreVehicle">
-                                                            </td> --}}
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                    </tbody>
-                                                </table>
-                                            </div>
-    
-                                        </div>
-                                    </div>
-    
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-    
-    
-                    @if (Gate::allows('permission', 'viewShuttleLocationHeader') || Gate::allows('permission', 'viewMap'))
-                        <div class="accordion accordion-solid-header" id="shuttle-location-card" role="tablist">
-                            <div class="card content-wrapper">
-                                <div class="card-header" role="tab" id="shuttle-location-header">
-                                    <h6 class="mb-0">
-                                        <a style="font-size:120%;" data-bs-toggle="collapse"
-                                            href="#shuttle-location-collapse"
-                                            aria-controls="shuttle-location-collapse" class="">
-                                            <i class="mdi mdi-octagon"> </i>&nbsp &nbsp SHUTTLE LOCATION MANAGEMENT
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="shuttle-location-collapse" class="collapse" role="tabpanel"
-                                    aria-labelledby="shuttle-location-header" data-bs-parent="#shuttle-location-card"
-                                    style="">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered">
-                                                    <thead>
-                                                        <tr role="row">
-                                                            <th class="sorting  text-center" style="width: 200px;">
-                                                                Sub-systems </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Create </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Update </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                View </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Delete </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Restore </th>
-                                                            <th class="sorting  text-center" style="width: 150px;">
-                                                                Reset Password</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Shuttle Location Management Header</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            @if (Gate::allows('permission', 'viewShuttleLocationHeader'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="viewShuttleLocationHeader">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Map Management</td>
-                                                            @if (Gate::allows('permission', 'createMap'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createMap">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateMap'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateMap">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewMap'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewMap">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteMap'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteMap">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreMap'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restoreMap">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                    </tbody>
-                                                </table>
-                                            </div>
-    
-                                        </div>
-                                    </div>
-    
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-    
-                    @if (Gate::allows('permission', 'viewCompanyHeader') ||
-                            Gate::allows('permission', 'viewCompany') ||
-                            Gate::allows('permission', 'viewDepartment') ||
-                            Gate::allows('permission', 'viewPosition'))
-                        <div class="accordion accordion-solid-header" id="company-card" role="tablist">
-                            <div class="card content-wrapper">
-                                <div class="card-header" role="tab" id="company-header">
-                                    <h6 class="mb-0">
-                                        <a style="font-size:120%;" data-bs-toggle="collapse" href="#company-collapse"
-                                            aria-controls="company-collapse" class="">
-                                            <i class="mdi mdi-octagon"> </i>&nbsp &nbsp COMPANY MANAGEMENT
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="company-collapse" class="collapse" role="tabpanel"
-                                    aria-labelledby="company-header" data-bs-parent="#company-card" style="">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered">
-                                                    <thead>
-                                                        <tr role="row">
-                                                            <th class="sorting  text-center" style="width: 200px;">
-                                                                Sub-systems </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Create </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Update </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                View </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Delete </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Restore </th>
-                                                            <th class="sorting  text-center" style="width: 150px;">
-                                                                Reset Password</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Company Management Header</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            @if (Gate::allows('permission', 'viewCompanyHeader'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewCompanyHeader">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Company Management</td>
-                                                            @if (Gate::allows('permission', 'createCompany'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createCompany">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateCompany'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateCompany">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewCompany'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewCompany">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteCompany'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteCompany">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreCompany'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restoreCompany">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Department Management</td>
-                                                            @if (Gate::allows('permission', 'createDepartment'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createDepartment">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateDepartment'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateDepartment">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewDepartment'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewDepartment">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteDepartment'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteDepartment">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreDepartment'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restoreDepartment">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Position Management</td>
-                                                            @if (Gate::allows('permission', 'createPosition'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createPosition">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updatePosition'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updatePosition">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewPosition'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewPosition">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deletePosition'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deletePosition">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restorePosition'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restorePosition">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                    </tbody>
-                                                </table>
-                                            </div>
-    
-                                        </div>
-                                    </div>
-    
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-    
-                    @if (Gate::allows('permission', 'viewBookingHeader') ||
-                            Gate::allows('permission', 'viewBookingType') ||
-                            Gate::allows('permission', 'viewBooking') ||
-                            Gate::allows('permission', 'viewBookingApproval') ||
-                            Gate::allows('permission', 'viewTripRate'))
-                        <div class="accordion accordion-solid-header" id="booking-card" role="tablist">
-                            <div class="card content-wrapper">
-                                <div class="card-header" role="tab" id="booking-header">
-                                    <h6 class="mb-0">
-                                        <a style="font-size:120%;" data-bs-toggle="collapse" href="#booking-collapse"
-                                            aria-controls="booking-collapse" class="">
-                                            <i class="mdi mdi-octagon"> </i>&nbsp &nbsp BOOKING MANAGEMENT
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="booking-collapse" class="collapse" role="tabpanel"
-                                    aria-labelledby="booking-header" data-bs-parent="#booking-card" style="">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered">
-                                                    <thead>
-                                                        <tr role="row">
-                                                            <th class="sorting  text-center" style="width: 200px;">
-                                                                Sub-systems </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Create </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Update </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                View </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Delete </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Restore </th>
-                                                            <th class="sorting  text-center" style="width: 150px;">
-                                                                Reset Password</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Booking Management Header</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            @if (Gate::allows('permission', 'viewBookingHeader'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewBookingHeader">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Booking Type Management</td>
-                                                            @if (Gate::allows('permission', 'createBookingType'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createBookingType">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateBookingType'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateBookingType">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewBookingType'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewBookingType">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteBookingType'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteBookingType">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreBookingType'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="restoreBookingType">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-    
-    
-    
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-    
-                                                        <tr>
-                                                            <td>Booking Management</td>
-                                                            @if (Gate::allows('permission', 'createBooking'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createBooking">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateBooking'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateBooking">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewBooking'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewBooking">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteBooking'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteBooking">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreBooking'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restoreBooking">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-    
-    
-    
-    
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Booking Approval Management</td>
-                                                            @if (Gate::allows('permission', 'createBookingApproval'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="createBookingApproval">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateBookingApproval'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="updateBookingApproval">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewBookingApproval'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="viewBookingApproval">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteBookingApproval'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="deleteBookingApproval">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreBookingApproval'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="restoreBookingApproval">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-    
-    
-    
-    
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-    
-                                                        <tr>
-                                                            <td>Rate Per Trip Management</td>
-                                                            @if (Gate::allows('permission', 'createTripRate'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createTripRate">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateTripRate'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateTripRate">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewTripRate'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewTripRate">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteTripRate'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteTripRate">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreTripRate'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restoreTripRate">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-    
-    
-    
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-    
-                                                    </tbody>
-                                                </table>
-                                            </div>
-    
-                                        </div>
-                                    </div>
-    
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-    
-                    @if (Gate::allows('permission', 'viewPassengerHeader') ||
-                            Gate::allows('permission', 'viewPassenger') ||
-                            Gate::allows('permission', 'viewPassengerGroup'))
-                        <div class="accordion accordion-solid-header" id="passenger-card" role="tablist">
-                            <div class="card content-wrapper">
-                                <div class="card-header" role="tab" id="passenger-header">
-                                    <h6 class="mb-0">
-                                        <a style="font-size:120%;" data-bs-toggle="collapse"
-                                            href="#passenger-collapse" aria-controls="passenger-collapse"
-                                            class="">
-                                            <i class="mdi mdi-octagon"> </i>&nbsp &nbsp PASSENGER MANAGEMENT
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="passenger-collapse" class="collapse" role="tabpanel"
-                                    aria-labelledby="passenger-header" data-bs-parent="#passenger-card"
-                                    style="">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered">
-                                                    <thead>
-                                                        <tr role="row">
-                                                            <th class="sorting  text-center" style="width: 200px;">
-                                                                Sub-systems </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Create </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Update </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                View </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Delete </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Restore </th>
-                                                            <th class="sorting  text-center" style="width: 150px;">
-                                                                Reset Password</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Passenger Management Header</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            @if (Gate::allows('permission', 'viewPassengerHeader'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="viewPassengerHeader">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Passenger Management</td>
-                                                            @if (Gate::allows('permission', 'createPassenger'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createPassenger">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updatePassenger'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updatePassenger">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewPassenger'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewPassenger">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deletePassenger'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deletePassenger">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restorePassenger'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restorePassenger">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Passenger Group Management</td>
-                                                            @if (Gate::allows('permission', 'createPassengerGroup'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="createPassengerGroup">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updatePassengerGroup'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="updatePassengerGroup">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewPassengerGroup'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="viewPassengerGroup">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deletePassengerGroup'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="deletePassengerGroup">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restorePassengerGroup'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]"
-                                                                        value="restorePassengerGroup">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                    </tbody>
-                                                </table>
-                                            </div>
-    
-                                        </div>
-                                    </div>
-    
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-    
-                    @if (Gate::allows('permission', 'viewBilling') || Gate::allows('permission', 'viewBillingHeader'))
-                        <div class="accordion accordion-solid-header" id="billing-card" role="tablist">
-                            <div class="card content-wrapper">
-                                <div class="card-header" role="tab" id="billing-header">
-                                    <h6 class="mb-0">
-                                        <a style="font-size:120%;" data-bs-toggle="collapse" href="#billing-collapse"
-                                            aria-controls="billing-collapse" class="">
-                                            <i class="mdi mdi-octagon"> </i>&nbsp &nbsp BILLING MANAGEMENT
-                                        </a>
-                                    </h6>
-                                </div>
-                                <div id="billing-collapse" class="collapse" role="tabpanel"
-                                    aria-labelledby="billing-header" data-bs-parent="#billing-card" style="">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered">
-                                                    <thead>
-                                                        <tr role="row">
-                                                            <th class="sorting  text-center" style="width: 200px;">
-                                                                Sub-systems </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Create </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Update </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                View </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Delete </th>
-                                                            <th class="sorting  text-center" style="width: 100px;">
-                                                                Restore </th>
-                                                            <th class="sorting  text-center" style="width: 150px;">
-                                                                Reset Password</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Billing Management Header</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            @if (Gate::allows('permission', 'viewBillingHeader'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewBillingHeader">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                            <td class="text-center">-</td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>Billing Management</td>
-                                                            @if (Gate::allows('permission', 'createBilling'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="createBilling">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'updateBilling'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="updateBilling">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'viewBilling'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="viewBilling">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'deleteBilling'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="deleteBilling">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-                                                            @if (Gate::allows('permission', 'restoreBilling'))
-                                                                <td class="text-center"><input type="checkbox"
-                                                                        name="permission[]" value="restoreBilling">
-                                                                </td>
-                                                            @else
-                                                                <td class="text-center">-</td>
-                                                            @endif
-    
-    
-    
-    
-    
-                                                            <td class="text-center">-
-                                                            </td>
-                                                        </tr>
-    
-                                                    </tbody>
-                                                </table>
-                                            </div>
-    
-                                        </div>
-                                    </div>
-    
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-    
-                        </div>
+                        @endif
 
 
-                    </div>
+                        @if (Gate::allows('permission', 'viewEventHeader') || Gate::allows('permission', 'viewEvent') || access_level() == 1)
+                            <div class="accordion accordion-solid-header" id="event-card" role="tablist">
+                                <div class="card content-wrapper">
+                                    <div class="card-header" role="tab" id="event-header">
+                                        <h6 class="mb-0">
+                                            <a style="font-size:120%;" data-bs-toggle="collapse" href="#event-collapse"
+                                                aria-controls="event-collapse" class="">
+                                                <i class="mdi mdi-octagon"> </i>&nbsp &nbsp EVENT MANAGEMENT
+                                            </a>
+                                        </h6>
+                                    </div>
+                                    <div id="event-collapse" class="collapse" role="tabpanel"
+                                        aria-labelledby="event-header" data-bs-parent="#event-card" style="">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead>
+                                                            <tr role="row">
+                                                                <th class="sorting  text-center" style="width: 200px;">
+                                                                    Sub-systems </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Create </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Update </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    View </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Delete </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Restore </th>
+                                                                <th class="sorting  text-center" style="width: 150px;">
+                                                                    -</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Event Management Header</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                @if (Gate::allows('permission', 'viewEventHeader') || access_level() == 1)
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="viewEventHeader">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
 
-                    <div class="row">
-                        <div class="col-md-12">
-                        </div>
-                    </div>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                            </tr>
+
+                                                            @if (access_level() == 1)
+                                                            <tr>
+                                                                <td>Calendar</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                @if (Gate::allows('permission', 'viewGuestCalendar') || access_level() == 1)
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]" value="viewGuestCalendar">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                            </tr>
+                                                        @endif
+
+                                                            @if (access_level() == 1)
+                                                                <tr>
+                                                                    <td>Event Management</td>
+                                                                    @if (Gate::allows('permission', 'createEvent') || access_level() == 1)
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]" value="createEvent">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'updateEvent') || access_level() == 1)
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]" value="updateEvent">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'viewEvent') || access_level() == 1)
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]" value="viewEvent">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'deleteEvent') || access_level() == 1)
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]" value="deleteEvent">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'restoreEvent') || access_level() == 1)
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]" value="restoreEvent">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+
+
+
+                                                                    <td class="text-center">-
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if (Gate::allows('permission', 'viewEventSettingsHeader') || Gate::allows('permission', 'viewEventSettings')|| access_level() == 1)
+                            <div class="accordion accordion-solid-header" id="event-settings-card" role="tablist">
+                                <div class="card content-wrapper">
+                                    <div class="card-header" role="tab" id="event-settings-header">
+                                        <h6 class="mb-0">
+                                            <a style="font-size:120%;" data-bs-toggle="collapse"
+                                                href="#event-settings-collapse" aria-controls="event-settings-collapse"
+                                                class="">
+                                                <i class="mdi mdi-octagon"> </i>&nbsp &nbsp EVENT SETTINGS MANAGEMENT
+                                            </a>
+                                        </h6>
+                                    </div>
+                                    <div id="event-settings-collapse" class="collapse" role="tabpanel"
+                                        aria-labelledby="event-settings-header" data-bs-parent="#event-settings-card"
+                                        style="">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead>
+                                                            <tr role="row">
+                                                                <th class="sorting  text-center" style="width: 200px;">
+                                                                    Sub-systems </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Create </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Update </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    View </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Delete </th>
+                                                                <th class="sorting  text-center" style="width: 100px;">
+                                                                    Restore </th>
+                                                                <th class="sorting  text-center" style="width: 150px;">
+                                                                    -</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Event Settings Header</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                @if (Gate::allows('permission', 'viewEventSettingsHeader') || access_level() == 1 )
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]"
+                                                                            value="viewEventSettingsHeader">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                                <td class="text-center">-</td>
+                                                            </tr>
+
+                                                            @if (access_level() == 1)
+                                                                <tr>
+                                                                    <td>Location Management</td>
+                                                                    @if (Gate::allows('permission', 'createLocation') || access_level() == 1)
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="createLocation">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'updateLocation') || access_level() == 1)
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="updateLocation">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'viewLocation') || access_level() == 1)
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="viewLocation">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'deleteLocation') || access_level() == 1)
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="deleteLocation">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+
+                                                                    @if (Gate::allows('permission', 'restoreLocation') || access_level() == 1)
+                                                                        <td class="text-center"><input type="checkbox"
+                                                                                name="permission[]"
+                                                                                value="restoreLocation">
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">-</td>
+                                                                    @endif
+                                                                    <td class="text-center">-
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+
+                                                            @if (access_level() == 1)
+                                                            <tr>
+                                                                <td>Activities Management</td>
+                                                                @if (Gate::allows('permission', 'createActivities') || access_level() == 1)
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]"
+                                                                            value="createActivities">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                @if (Gate::allows('permission', 'updateActivities') || access_level() == 1)
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]"
+                                                                            value="updateActivities">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                @if (Gate::allows('permission', 'viewActivities') || access_level() == 1)
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]"
+                                                                            value="viewActivities">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                @if (Gate::allows('permission', 'deleteActivities') || access_level() == 1)
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]"
+                                                                            value="deleteActivities">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+
+                                                                @if (Gate::allows('permission', 'restoreActivities') || access_level() == 1)
+                                                                    <td class="text-center"><input type="checkbox"
+                                                                            name="permission[]"
+                                                                            value="restoreActivities">
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">-</td>
+                                                                @endif
+                                                                <td class="text-center">-
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+
+                                                        
+                                                        @if (access_level() == 1)
+                                                        <tr>
+                                                            <td>Person In Charge Management</td>
+                                                            @if (Gate::allows('permission', 'createPersonInCharge') || access_level() == 1)
+                                                                <td class="text-center"><input type="checkbox"
+                                                                        name="permission[]"
+                                                                        value="createPersonInCharge">
+                                                                </td>
+                                                            @else
+                                                                <td class="text-center">-</td>
+                                                            @endif
+
+                                                            @if (Gate::allows('permission', 'updatePersonInCharge') || access_level() == 1)
+                                                                <td class="text-center"><input type="checkbox"
+                                                                        name="permission[]"
+                                                                        value="updatePersonInCharge">
+                                                                </td>
+                                                            @else
+                                                                <td class="text-center">-</td>
+                                                            @endif
+
+                                                            @if (Gate::allows('permission', 'viewPersonInCharge') || access_level() == 1)
+                                                                <td class="text-center"><input type="checkbox"
+                                                                        name="permission[]"
+                                                                        value="viewPersonInCharge">
+                                                                </td>
+                                                            @else
+                                                                <td class="text-center">-</td>
+                                                            @endif
+
+                                                            @if (Gate::allows('permission', 'deletePersonInCharge') || access_level() == 1)
+                                                                <td class="text-center"><input type="checkbox"
+                                                                        name="permission[]"
+                                                                        value="deletePersonInCharge">
+                                                                </td>
+                                                            @else
+                                                                <td class="text-center">-</td>
+                                                            @endif
+
+                                                            @if (Gate::allows('permission', 'restorePersonInCharge') || access_level() == 1)
+                                                                <td class="text-center"><input type="checkbox"
+                                                                        name="permission[]"
+                                                                        value="restorePersonInCharge">
+                                                                </td>
+                                                            @else
+                                                                <td class="text-center">-</td>
+                                                            @endif
+                                                            <td class="text-center">-
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
 
 
 
@@ -1614,61 +901,35 @@
         aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-secondary text-white">
+                <div class="modal-header">
                     <h5 class="modal-title" id="update_user_label">Update Vehicle Type</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" class="text-white">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                
                 <div class="modal-body">
-                    <label for="firstname">INSTRUCTION: Please fillout the field with (<span style="color:red"> * </span>).</label><br><br>
+                    <label for="firstname">(<span style="color:red"> * </span>)の箇所を記入してください .</label>
                     <form class="forms-sample" id="update_user_forms" method="POST">
                         @csrf
                         @method('POST')
                         <input type="hidden" id="update_id" name="update_id">
+                        
+                        <br>
+                        <br>
+                    <h5 class="modal-title" id="exampleModalLabel">個人インフォメーション</h5>
+                    <hr>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="firstname">Fist Name <span style="color:red"> * </span></label>
-                                    <input type="text" class="form-control " id="firstname" name="firstname"
-                                        placeholder="First Name">
+                                    <label for="firstname">氏名 <span style="color:red"> * </span></label>
+                                    <input type="text" class="form-control " id="fullname" name="fullname"
+                                        placeholder="氏名">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="lastname">Last Name <span style="color:red"> * </span></label>
-                                    <input type="text" class="form-control" id="lastname" name="lastname"
-                                        placeholder="Last Name">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="middlename">Middle Name <span style="color:red"> * </span></label>
-                                    <input type="text" class="form-control" id="middlename" name="middlename"
-                                        placeholder="Middle Name">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="suffix">Suffix <span style="color:red"> * </span></label>
-                                    <select class="selectpicker form-control" data-live-search="true" name="suffix"
-                                        id="suffix">
-                                        <option value="" disabled="" selected="">Select...</option>
-                                        <option value="II">II</option>
-                                        <option value="III">III</option>
-                                        <option value="IV">IV</option>
-                                        <option value="V">V</option>
-                                        <option value="JR">JR</option>
-                                        <option value="SR">SR</option>
-                                        <option value="NA">NA</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="date_of_birth">Date of Birth <span style="color:red"> * </span></label>
+                                    <label for="date_of_birth">生年月日 <span style="color:red"> * </span></label>
                                     {{-- <input type="text" class="form-control" id="date_of_birth"/> --}}
 
                                     <div class="input-group">
@@ -1677,137 +938,64 @@
                                             </span>
                                         </div>
                                         <input type="text" class="form-control" id="date_of_birth"
-                                            name="date_of_birth" placeholder="Date of Birth">
+                                            name="date_of_birth" placeholder="生年月日">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="sex">Sex <span style="color:red"> * </span></label>
+                                    <label for="sex">性別 <span style="color:red"> * </span></label>
                                     <select class="selectpicker form-control" data-live-search="true" name="sex"
                                         id="sex">
-                                        <option value="" disabled="" selected="">Select...</option>
-                                        <option value="MALE">Male</option>
-                                        <option value="FEMALE">Female</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="civil_status">Civil Status <span style="color:red"> * </span></label>
-                                    <select class="selectpicker form-control" data-live-search="true" name="civil_status"
-                                        id="civil_status">
-                                        <option value="" disabled="" selected="">Select...</option>
-                                        <option value="SINGLE">Single</option>
-                                        <option value="MARRIED">Married</option>
-                                        <option value="DIVORCED">Divorced</option>
-                                        <option value="SEPARATED">Separated</option>
-                                        <option value="WIDOWED">Widowed</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="religion">Religion <span style="color:red"> * </span></label>
-                                    <input type="text" class="form-control" id="religion" name="religion"
-                                        placeholder="Religion">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Region <span style="color:red"> * </span></label>
-                                    <select class="form-control" data-live-search="true" id="region" name="region">
-                                        <option value="" disabled selected>Select.....</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- Province -->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Province <span style="color:red"> * </span></label>
-                                    <select class="form-control" data-live-search="true" id="province" name="province">
-                                        <option value="" disabled selected>Select.....</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- City -->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>City <span style="color:red"> * </span></label>
-                                    <select class="form-control" data-live-search="true" id="city" name="city">
-                                        <option value="" disabled selected>Select.....</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <!-- Barangay -->
-                                <div class="form-group">
-                                    <label>Barangay <span style="color:red"> * </span></label>
-                                    <select class="form-control" data-live-search="true" id="barangay" name="barangay">
-                                        <option value="" disabled selected>Select.....</option>
+                                        <option value="" disabled="" selected="">選択...</option>
+                                        <option value="MALE">男性</option>
+                                        <option value="FEMALE">女性</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
+                       
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label for="home_address">Home Adrress <span style="color:red"> * </span></label><small>(e.g. street, block, lot,
+                                        <label for="home_address">自宅住所 <span style="color:red"> * </span></label><small>(e.g. street, block, lot,
                                             unit)</small>
-                                        <input type="text" class="form-control" placeholder="Home Address"
+                                        <input type="text" class="form-control" placeholder="自宅住所"
                                             name="home_address" id="home_address"></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="contact">Contact <span style="color:red"> * </span></label>
-                                        <input type="text" class="form-control" id="contact" name="contact"
-                                            placeholder="Contact Number">
-                                    </div>
-                                </div>
-                            </div>
+                          
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="email">Email <span style="color:red"> * </span></label>
+                                    <label for="email">電子メール <span style="color:red"> * </span></label>
                                     <input id="email" type="email" name="email" :value="old('email')" required
                                         class="form-control" placeholder="user@gmail.com">
                                 </div>
                             </div>
-                           
-                            <hr>
-                            <h5 class="modal-title">User Access</h5>
-                            <br>
-                            <br>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="region">Employee Number <span style="color:red"> * </span></label>
-                                    <input type="text" class="form-control" id="employee_code" name="employee_code"
-                                        placeholder="Employee Number">
-                                </div>
-                            </div>
 
+                        </div>
+                        
+                        <br>
+                        <h5 class="modal-title" id="exampleModalLabel">ユーザーアクセス</h5>
+                        <hr>
+                        <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="region">Company <span style="color:red"> * </span></label>
+                                    <label for="region">会社名 <span style="color:red"> * </span></label>
                                     <select class="selectpicker form-control" id="company_name" name="company_name">
-                                        <option value="" disabled selected>Select...</option>
+                                        <option value="" disabled selected>選択...</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="region">Department <span style="color:red"> * </span></label>
+                                    <label for="region">部署 <span style="color:red"> * </span></label>
                                     <select class="selectpicker form-control" id="department" name="department">
-                                        <option value="" disabled selected>Select...</option>
+                                        <option value="" disabled selected>選択...</option>
                                     </select>
                                 </div>
                             </div>
@@ -1815,18 +1003,18 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="region">Position <span style="color:red"> * </span></label>
+                                    <label for="region">役職 <span style="color:red"> * </span></label>
                                     <select class="selectpicker form-control" id="position" name="position">
-                                        <option value="" disabled selected>Select...</option>
+                                        <option value="" disabled selected>選択...</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="region">Level of Access <span style="color:red"> * </span></label>
+                                    <label for="region">アクセスレベル <span style="color:red"> * </span></label>
                                     <select class="selectpicker form-control" id="access" name="access">
-                                        <option value="" disabled selected>Select...</option>
+                                        <option value="" disabled selected>選択...</option>
                                     </select>
                                 </div>
                             </div>
@@ -1838,8 +1026,8 @@
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
                 </div>
                 </form>
             </div>
@@ -1862,7 +1050,7 @@
             "processing": true,
             "serverSide": true,
             "language": {
-                "sSearch": "Search Fullname:"
+                "sSearch": "氏名検索:"
             },
             "ajax": {
                 "url": '{{ route('get-all-users') }}',
@@ -1875,27 +1063,13 @@
             "columns": [{
                     "data": "fullname"
                 },
-                // {
-                //     "data": "dob"
-                // },
-                // {
-                //     "data": "address"
-                // },
-                // {
-                //     "data": "email"
-                // },
                 {
-                    "data": "company"
-                },
-                {
-                    "data": "department"
-                },
-                {
-                    "data": "position"
+                    "data": "email"
                 },
                 {
                     "data": "level_access"
                 },
+             
                 {
                     "data": "status"
                 },
@@ -1905,7 +1079,7 @@
             ],
             "columnDefs": [{
                 "orderable": false,
-                "targets": [2, 3]
+                "targets": [3, 4]
             }, ],
             initComplete: function() {
                 $('.dataTables_filter input').unbind();
@@ -1925,47 +1099,28 @@
         $(document).ready(function() {
             $("#update_user_forms").validate({
                 rules: {
-                    firstname: "required",
-                    lastname: "required",
-                    middlename: "required",
-                    suffix: "required",
+                    fullname: "required",
                     date_of_birth: "required",
                     sex: "required",
-                    civil_status: "required",
-                    religion: "required",
-                    region: "required",
-                    province: "required",
-                    city: "required",
-                    barangay: "required",
                     home_address: "required",
-                    contact: "required",
                     company_name: "required",
                     department: "required",
                     position: "required",
                     access: "required",
-                    employee_code: "required",
+                    email: "required"
 
                 },
                 messages: {
-                    firstname: "Please enter your firstname",
-                    lastname: "Please enter your lastname",
-                    middlename: "Please enter your middlename",
-                    suffix: "Please enter your suffix",
-                    date_of_birth: "Please enter your date of birth",
-                    sex: "Please enter your sex",
-                    civil_status: "Please enter your civil status",
-                    religion: "Please enter your religion",
-                    region: "Please enter your region",
-                    province: "Please enter your province",
-                    city: "Please enter your city",
-                    barangay: "Please enter your barangay",
-                    home_address: "Please enter your home address",
-                    contact: "Please enter your contact",
-                    company_name: "Please enter your company",
-                    department: "Please enter your department",
-                    position: "Please enter your position",
-                    access: "Please enter your level of access",
-                    employee_code: "Please enter your employee number",
+
+                    fullname: "氏名の入力をお願いします",
+                    date_of_birth: "生年月日の入力をお願いします",
+                    sex: "性別の入力をお願いします",
+                    home_address: "住所の入力をお願いします",
+                    email: "メールアドレスの入力をお願いします",
+                    company_name: "会社名の入力をお願いします",
+                    department: "部署の入力をお願いします",
+                    position: "役職の入力をお願いします",
+                    access: "アクセスレベルの入力をお願いします",
                 },
                 onfocusout: function(e) {
                     this.element(e);
@@ -1991,22 +1146,19 @@
                 submitHandler: function(form) {
                     //EVENT FOR SAVING
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
+                        title: '更新してもよろしいですか？',
+                        text: "元に戻すことはできません",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Update it!',
+                        cancelButtonText: "キャンセル",   
+                        confirmButtonText: 'はい。更新いたします。',
                         //footer: '<a href = "mailto: jvn-cgs.com">Send an email to us!</a>'
                     }).then((result) => {
 
-                        console.log('working');
                         if (result.value) {
-
                             var formData = new FormData($("#update_user_forms").get(0));
-                            formData.append('txtRegion', $("#region :selected").text());
-
                             $.ajax({
                                 url: '/update-user-info',
                                 type: "POST",
@@ -2030,7 +1182,7 @@
                                         $('#update_user_modal').modal('hide');
                                         Swal.fire({
                                             title: "Updated!",
-                                            text: "Successfully Updated!",
+                                            text: "正しく更新されました。",
                                             icon: 'success',
                                             type: "success",
                                             html: "<b>User account details has been successfully updated.",
@@ -2039,11 +1191,11 @@
                                         table.ajax.reload(null, false);
                                     } else {
                                         Swal.fire({
-                                            title: "Oops! Something went wrong.",
+                                            title: "予期しないエラーが発生いたしました。",
                                             icon: 'error',
                                             html: "<b>" + data
                                                 .messages +
-                                                "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                                "! <br>もしくは管理業者までお問い合わせお願い致します。</b>",
                                             type: "error",
                                         });
                                         table.ajax.reload(null, false);
@@ -2051,9 +1203,9 @@
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) {
                                     swal.fire({
-                                        title: "Oops! something went wrong.",
+                                        title: "予期しないエラーが発生いたしました。",
                                         html: "<b>" + errorThrown +
-                                            "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                            "! <br>もしくは管理業者までお問い合わせお願い致します。</b>",
                                         type: "error",
                                         footer: ''
                                     });
@@ -2221,24 +1373,15 @@
                     if (data.success) {
                         $('#update_user_modal')
                             .find('.modal-header > h5')
-                            .text("Edit User Details").end()
+                            .text("ユーザー詳細の編集").end()
                             .modal('show');
                         $('#update_id').val(data[0].id);
-                        $('#firstname').val(data[0].first_name);
-                        $('#middlename').val(data[0].middle_name);
-                        $('#lastname').val(data[0].last_name);
+                        $('#fullname').val(data[0].fullname);
                         $('#email').val(data[0].user.email);
-                        $('#contact').val(data[0].telephone_number);
-                        $('#suffix').val(data[0].affiliation);
 
                         $('#sex').val(data[0].gender);
                         $('#date_of_birth').val(data[0].date_of_birth);
-                        $('#civil_status').val(data[0].civil_status);
                         $('#home_address').val(data[0].home_address);
-                        $('#religion').val(data[0].religion);
-                        $("#province").empty();
-                        $("#city").empty();
-                        $("#barangay").empty();
                         $("#department").empty();
                         $("#position").empty();
                         $("#company").empty();
@@ -2257,61 +1400,11 @@
 
                         permissionAccessID = data[0].user.employee.employee_has_position
                             .employee_position_has_permission_access.permission_has_access.permission.id;
-                        // $('select option[value="1"]').attr("selected",true);
 
-                        // $("#department").trigger('change');
-                        // $('#department').attr('value',  data[0].person_company_department.departments_info.id);
-                        if (data[0].region_id) {
-                            $("#region").val(data[0].region_id);
-
-                            //province combo box
-                            $.each(myData[$("#region").val()].province_list, function(index, value) {
-                                //console.log(index)
-                                $("#province").append('<option value="' + index + '">' + index +
-                                    '</option>');
-                                // console.log(index + " - " + index)
-                            });
-
-                            if (data[0].province) {
-                                $("#province").val(data[0].province);
-                                //city combo box
-                                $.each(myData[$("#region").val()].province_list[$("#province").val()]
-                                    .municipality_list,
-                                    function(index, value) {
-                                        $("#city").append('<option value="' + index + '">' + index +
-                                            '</option>');
-                                    });
-                            }
-
-                            if (data[0].city_mun) {
-                                $("#city").val(data[0].city_mun);
-                                //barangay combo box
-                                $.each(myData[$("#region").val()].province_list[$("#province").val()]
-                                    .municipality_list[$("#city").val()].barangay_list,
-                                    function(index, value) {
-                                        $("#barangay").append('<option value="' + value + '">' + value +
-                                            '</option>');
-                                    });
-
-                            }
-
-                            if (data[0].barangay) {
-                                $("#barangay").val(data[0].barangay);
-                                //barangay combo box
-                                $.each(myData[$("#region").val()].province_list[$("#province").val()]
-                                    .municipality_list[$("#city").val()].barangay_list,
-                                    function(index, value) {
-                                        $("#barangay").append('<option value="' + value + '">' + value +
-                                            '</option>');
-                                    });
-
-                            }
-
-                        }
 
                     } else {
                         Swal.fire({
-                            title: "Oops! something went wrong.",
+                            title: "予期しないエラーが発生いたしました。",
                             text: data.messages,
                             icon: 'success'
                         })
@@ -2319,7 +1412,7 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     swal.fire({
-                        title: "Oops! something went wrong.",
+                        title: "予期しないエラーが発生いたしました。",
                         text: errorThrown,
                         icon: 'success'
                     })
@@ -2352,19 +1445,11 @@
                         // $('#update_id').val(data.data.id);
                         $('#show_avatar').attr('src', '../assets/images/default-user-image.webp');
 
-                        $('#show_full_name').text(data[0].first_name + " " + data[0]
-                            .middle_name + " " + data[0].last_name);
+                        $('#show_full_name').text(data[0].fullname);
                         $('#show_email').text(data[0].user.email);
-                        $('#show_contact').text(data[0].telephone_number);
                         $('#show_sex').text(data[0].gender);
                         $('#show_dob').text(data[0].date_of_birth);
-                        $('#show_civil_status').text(data[0].civil_status);
                         $('#show_address').text(data[0].home_address);
-                        $('#show_barangay').text(data[0].barangay);
-                        $('#show_religion').text(data[0].religion);
-                        $('#show_city').text(data[0].city_mun);
-                        $('#show_province').text(data[0].province);
-                        $('#show_region').text(data[0].region);
 
                         if (data[1] != null) {
                             for (let index = 0; index < data[1].length; index++) {
@@ -2375,7 +1460,7 @@
 
                     } else {
                         Swal.fire({
-                            title: "Oops! something went wrong.",
+                            title: "予期しないエラーが発生いたしました。",
                             text: data.messages,
                             icon: 'success'
                         })
@@ -2383,7 +1468,7 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     swal.fire({
-                        title: "Oops! something went wrong.",
+                        title: "予期しないエラーが発生いたしました。",
                         text: errorThrown,
                         icon: 'success'
                     })
@@ -2398,15 +1483,15 @@
 
         //DELETE EVENT
         const removeUserRecord = (id) => {
-            // const url = '{{ route('get-drivers') }}';
             Swal.fire({
                 title: 'Remove User Data?',
                 icon: 'warning',
-                text: "You won't be able to revert this!",
+                text: "元に戻すことはできません",
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Delete it!'
+                cancelButtonText: "キャンセル",   
+                confirmButtonText: 'はい。削除いたします。'
             }).then((result) => {
                 if (result.value) {
                     //process loader true
@@ -2424,13 +1509,13 @@
                                 table.ajax.reload(null, false);
                                 Swal.fire({
                                     title: "Deactivate User!",
-                                    text: "Deleted Successfully!",
+                                    text: "正しく削除されました。",
                                     icon: "success",
-                                    html: "<b>User account has been successfully deactivated.",
+                                    // html: "<b>User account has been successfully deactivated.",
                                 });
                             } else {
                                 Swal.fire({
-                                    title: "Oops! something went wrong.",
+                                    title: "予期しないエラーが発生いたしました。",
                                     text: data.messages,
                                     icon: 'success'
                                 })
@@ -2438,7 +1523,7 @@
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             swal.fire({
-                                title: "Oops! something went wrong.",
+                                title: "予期しないエラーが発生いたしました。",
                                 text: errorThrown,
                                 icon: 'success'
                             })
@@ -2450,123 +1535,5 @@
                 }
             })
         };
-
-        const logoutUser = (id) =>
-        {
-            // Swal.fire({
-            //     title: 'Logout this User?',
-            //     icon: 'warning',
-            //     text: "All devices will be logout",
-            //     showCancelButton: true,
-            //     confirmButtonColor: '#3085d6',
-            //     cancelButtonColor: '#d33',
-            //     confirmButtonText: 'Yes, Logout it!'
-            // }).then((result) => {
-            //     if (result.value) {
-            //         //process loader true
-            //         $.ajax({
-            //             url: "/logout-user/" + id,
-            //             data: {
-            //                 _token: '{{ csrf_token() }}'
-            //             },
-            //             type: "GET",
-            //             beforeSend: function() {
-            //                 processObject.showProcessLoader();
-            //             },
-            //             success: function(data) {
-            //                 // if (data.success) {
-            //                 //     table.ajax.reload(null, false);
-            //                 //     Swal.fire({
-            //                 //         title: "Deactivate User!",
-            //                 //         text: "Deleted Successfully!",
-            //                 //         icon: "success",
-            //                 //         html: "<b>User account has been successfully deactivated.",
-            //                 //     });
-            //                 // } else {
-            //                 //     Swal.fire({
-            //                 //         title: "Oops! something went wrong.",
-            //                 //         text: data.messages,
-            //                 //         icon: 'success'
-            //                 //     })
-            //                 // }
-            //             },
-            //             error: function(jqXHR, textStatus, errorThrown) {
-            //                 swal.fire({
-            //                     title: "Oops! something went wrong.",
-            //                     text: errorThrown,
-            //                     icon: 'success'
-            //                 })
-            //             },
-            //             complete: function() {
-            //                 processObject.hideProcessLoader();
-            //             },
-            //         });
-            //     }
-            // })
-        }
-    </script>
-
-    <script>
-        //Start of Function for Address
-        let myData = data;
-        let region = '';
-        let province = '';
-        let counter = 1;
-        $(document).ready(function() {
-            addressAutoFill('#region', '#province', '#city', '#barangay');
-            addressAutoFill('#region-2', '#province-2', '#city-2', '#barangay-2');
-        });
-
-
-        function addressAutoFill(selectRegion, selectProvince, selectCity, selectBarangay) {
-            var $select = $(selectRegion);
-            $.each(myData, function(index, value) {
-                $select.append('<option value="' + index + '">' + value.region_name + '</option>');
-            });
-
-            $(selectRegion).on('change', function() {
-                var selectedRegion = $(this).children("option:selected").val();
-                region = selectedRegion;
-                var $select = $(selectProvince);
-                var $select_city = $(selectCity);
-                var $select_brgy = $(selectBarangay);
-                $select.empty()
-                $select_city.empty()
-                $select_brgy.empty()
-                $select.append('<option value="" disabled selected>Select.....</option>');
-                $select_city.append('<option value="" disabled selected>Select.....</option>');
-                $select_brgy.append('<option value="" disabled selected>Select.....</option>');
-                $.each(myData[selectedRegion].province_list, function(index, value) {
-                    $select.append('<option value="' + index + '">' + index + '</option>');
-                });
-            });
-
-            $(selectProvince).on('change', function() {
-                var selectedProvince = $(this).children("option:selected").val();
-                province = selectedProvince;
-                var $select = $(selectCity);
-                var $select_brgy = $(selectBarangay);
-                $select.empty()
-                $select_brgy.empty()
-                $select.append('<option value="" disabled selected>Select.....</option>');
-                $select_brgy.append('<option value="" disabled selected>Select.....</option>');
-                $.each(myData[region].province_list[selectedProvince].municipality_list, function(index, value) {
-                    $select.append('<option value="' + index + '">' + index + '</option>');
-                });
-            });
-
-            $(selectCity).on('change', function() {
-                var selectedCity = $(this).children("option:selected").val();
-                var $select = $(selectBarangay);
-                $select.empty()
-                $select.append('<option value="" disabled selected>Select.....</option>');
-                $.each(myData[region].province_list[province].municipality_list[selectedCity].barangay_list,
-                    function(index, value) {
-                        $select.append('<option value="' + value + '">' + value + '</option>');
-                    });
-
-            });
-        }
-        //End of Function for Address
     </script>
 @endsection

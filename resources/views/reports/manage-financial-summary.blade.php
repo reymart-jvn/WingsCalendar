@@ -60,7 +60,7 @@
                                                 </span>
                                             </div>
                                             <input type="text" class="form-control" id="grp_date_from"
-                                                name="grp_date_from" placeholder="Date From">
+                                                name="grp_date_from" placeholder="データフォーム">
                                         </div>
 
                                     </div>

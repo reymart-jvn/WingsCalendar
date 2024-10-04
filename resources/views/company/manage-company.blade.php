@@ -1,7 +1,6 @@
 @extends('layouts.star-admin-app')
 @section('css')
     <style>
-
         td.details-control {
             background: url('../assets/images/plus.png') no-repeat center center;
             cursor: pointer;
@@ -20,8 +19,8 @@
                     <h4 class="card-title d-flex justify-content-between align-items-center">{{ $table_title }}
                         {{-- <button type="button" data-toggle="modal" data-target="#update_modal" class="btn btn-success btn-icon-tex">Add New company Type</button> --}}
                         @if (Gate::allows('permission', 'createCompany'))
-                            <button type="button" onclick="showModalAdd()" class="btn btn-success btn-icon-tex">Add New
-                                Company</button>
+                            <button type="button" onclick="showModalAdd()"
+                                class="btn btn-success btn-icon-tex">新しい会社を追加</button>
                         @endif
                     </h4>
 
@@ -34,32 +33,31 @@
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th>
-                                        Company Code
+                                        コード
                                     </th>
                                     <th>
-                                        Company Name
+                                        会社名
                                     </th>
                                     <th>
-                                        VAT Number
+
+                                        電子メール
                                     </th>
                                     <th>
-                                        Email
+                                        住所
                                     </th>
                                     <th>
-                                        Address
+
+                                        連絡先番号
                                     </th>
                                     <th>
-                                        Contact N0
+                                        電話番号
                                     </th>
                                     <th>
-                                        Telephone No
-                                    </th>
-                                    <th>
-                                        Status
+                                        状態
                                     </th>
                                     <th @if (Gate::allows('permission', 'updateCompany') || Gate::allows('permission', 'deleteCompany')) style="width: 200px;" @endif>
                                         @if (Gate::allows('permission', 'updateCompany') || Gate::allows('permission', 'deleteCompany'))
-                                            Action
+                                            アクション
                                         @endif
                                     </th>
                                 </tr>
@@ -94,48 +92,49 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="region">Company Name <span style="color:red"> * </span></label>
+                                    <label for="region">会社名 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_company_name"
-                                        name="add_company_name" placeholder="Company Name">
+                                        name="add_company_name" placeholder="会社名">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="region">Acronym<span style="color:red"> * </span></label>
+                                    <label for="region">頭字語<span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="company_name_acronym"
-                                        name="company_name_acronym" placeholder="Acronym">
+                                        name="company_name_acronym" placeholder="頭字語">
                                 </div>
                             </div>
                             <!-- Province -->
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="province">VAT Number <span style="color:red"> * </span></label>
+                                    <label for="province">VAT番号 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_vat_number" name="add_vat_number"
-                                        placeholder="VAT Number">
+                                        placeholder="VAT番号">
                                 </div>
                             </div>
 
                             <!-- City -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="city">Email <span style="color:red"> * </span></label>
+                                    <label for="city">電子メール <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_email" name="add_email"
-                                        placeholder="Email">
+                                        placeholder="電子メール">
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="province">Contact Number <span style="color:red"> * </span></label>
+                                    <label for="province">
+                                        連絡先番号 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_contact_number"
-                                        name="add_contact_number" placeholder="Contact Number">
+                                        name="add_contact_number" placeholder="連絡先番号">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="city">Telephone Number <span style="color:red"> * </span></label>
+                                    <label for="city">電話番号 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_tel_number" name="add_tel_number"
-                                        placeholder="Telephone Number">
+                                        placeholder="電話番号">
                                 </div>
                             </div>
 
@@ -143,23 +142,23 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="region">Address <span style="color:red"> * </span></label>
+                                    <label for="region">住所 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_address" name="add_address"
-                                        placeholder="Address">
+                                        placeholder="住所">
                                 </div>
                             </div>
                             <!-- Province -->
-                           
+
 
                             <!-- City -->
-                            
+
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="add_department_multiselect">Departments <small>(Select
-                                            multiple department)</small> <span style="color:red"> * </span></label>
+                                    <label for="add_department_multiselect">部門 <small>(選択複数の部門)</small> <span
+                                            style="color:red"> * </span></label>
                                     <select class="w-100 select2-hidden-accessible" id="add_department_multiselect"
                                         name="add_department_multiselect[]" multiple="" tabindex="-1"
                                         aria-hidden="true">
@@ -168,39 +167,40 @@
                             </div>
                         </div>
 
-                        <h5 class="modal-title" id="add_company_label">Person incharge information</h5><br>
+                        <h5 class="modal-title" id="add_company_label">連絡先</h5><br>
 
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="region">Employee Number <span style="color:red"> * </span></label>
+                                    <label for="region">
+                                        従業員番号 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_emp_num" name="add_emp_num"
-                                        placeholder="Employee Number">
+                                        placeholder="従業員番号">
                                 </div>
                             </div>
                             <!-- Province -->
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="province">First Name <span style="color:red"> * </span></label>
+                                    <label for="province">ファーストネーム<span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_first_name"
-                                        name="add_first_name" placeholder="First Name">
+                                        name="add_first_name" placeholder="ファーストネーム">
                                 </div>
                             </div>
 
                             <!-- City -->
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="city">Middle Name <span style="color:red"> * </span></label>
+                                    <label for="city">ミドルネーム <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_middle_name"
-                                        name="add_middle_name" placeholder="Middle Name">
+                                        name="add_middle_name" placeholder="ミドルネーム">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="city">Last Name <span style="color:red"> * </span></label>
+                                    <label for="city">苗字 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_last_name" name="add_last_name"
-                                        placeholder="Last Name">
+                                        placeholder="苗字">
                                 </div>
                             </div>
 
@@ -208,34 +208,34 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="region">Address <span style="color:red"> * </span></label>
+                                    <label for="region"> 住所 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_person_address"
-                                        name="add_person_address" placeholder="Address">
+                                        name="add_person_address" placeholder="住所">
                                 </div>
                             </div>
                             <!-- Province -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="province">Contact Number <span style="color:red"> * </span></label>
+                                    <label for="province">連絡先番号 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_person_contact_number"
-                                        name="add_person_contact_number" placeholder="Contact Number">
+                                        name="add_person_contact_number" placeholder="連絡先番号">
                                 </div>
                             </div>
 
                             <!-- City -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="city">Email <span style="color:red"> * </span></label>
+                                    <label for="city">電子メール <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="add_person_email"
-                                        name="add_person_email" placeholder="Email">
+                                        name="add_person_email" placeholder="電子メール">
                                 </div>
                             </div>
                         </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">変更を保存する</button>
                 </div>
                 </form>
             </div>
@@ -261,26 +261,26 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="region">Company Name <span style="color:red"> * </span></label>
+                                    <label for="region">会社名 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_company_name"
-                                        name="update_company_name" placeholder="Company Name">
+                                        name="update_company_name" placeholder="会社名">
                                 </div>
                             </div>
                             <!-- Province -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="province">VAT Number <span style="color:red"> * </span></label>
+                                    <label for="province">VAT番号 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_vat_number"
-                                        name="update_vat_number" placeholder="VAT Number">
+                                        name="update_vat_number" placeholder="VAT番号">
                                 </div>
                             </div>
 
                             <!-- City -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="city">Email <span style="color:red"> * </span></label>
+                                    <label for="city">電子メール <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_email" name="update_email"
-                                        placeholder="Email">
+                                        placeholder="電子メール">
                                 </div>
                             </div>
 
@@ -288,26 +288,26 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="region">Address <span style="color:red"> * </span></label>
+                                    <label for="region">住所 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_address"
-                                        name="update_address" placeholder="updateress">
+                                        name="update_address" placeholder="住所">
                                 </div>
                             </div>
                             <!-- Province -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="province">Contact Number <span style="color:red"> * </span></label>
+                                    <label for="province">連絡先番号 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_contact_number"
-                                        name="update_contact_number" placeholder="Contact Number">
+                                        name="update_contact_number" placeholder="連絡先番号">
                                 </div>
                             </div>
 
                             <!-- City -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="city">Telephone Number <span style="color:red"> * </span></label>
+                                    <label for="city">電話番号<span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_tel_number"
-                                        name="update_tel_number" placeholder="Telephone Number">
+                                        name="update_tel_number" placeholder="電話番号">
                                 </div>
                             </div>
                         </div>
@@ -315,8 +315,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="update_department_multiselect">Departments <small>(Select
-                                            multiple department)</small> <span style="color:red"> * </span></label>
+                                    <label for="update_department_multiselect">部門 <small>(複数の部門を選択してください)</small> <span style="color:red"> * </span></label>
                                     <select class="w-100 select2-hidden-accessible" id="update_department_multiselect"
                                         name="update_department_multiselect[]" multiple="" tabindex="-1"
                                         aria-hidden="true">
@@ -325,39 +324,39 @@
                             </div>
                         </div>
 
-                        <h5 class="modal-title" id="add_company_label">Person incharge information</h5><br>
+                        <h5 class="modal-title" id="add_company_label">連絡先</h5><br>
 
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="region">Employee Number <span style="color:red"> * </span></label>
+                                    <label for="region">E従業員番号 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_emp_num"
-                                        name="update_emp_num" placeholder="Employee Number">
+                                        name="update_emp_num" placeholder="従業員番号">
                                 </div>
                             </div>
                             <!-- Province -->
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="province">First Name <span style="color:red"> * </span></label>
+                                    <label for="province">ファーストネーム <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_first_name"
-                                        name="update_first_name" placeholder="First Name">
+                                        name="update_first_name" placeholder="ファーストネーム">
                                 </div>
                             </div>
 
                             <!-- City -->
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="city">Middle Name <span style="color:red"> * </span></label>
+                                    <label for="city">ミドルネーム <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_middle_name"
-                                        name="update_middle_name" placeholder="Middle Name">
+                                        name="update_middle_name" placeholder="ミドルネーム">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="city">Last Name <span style="color:red"> * </span></label>
+                                    <label for="city">苗字 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_last_name"
-                                        name="update_last_name" placeholder="Last Name">
+                                        name="update_last_name" placeholder="苗字">
                                 </div>
                             </div>
 
@@ -365,17 +364,17 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="region">Address <span style="color:red"> * </span></label>
+                                    <label for="region">住所 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_person_address"
-                                        name="update_person_address" placeholder="Address">
+                                        name="update_person_address" placeholder="住所">
                                 </div>
                             </div>
                             <!-- Province -->
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="province">Contact Number <span style="color:red"> * </span></label>
+                                    <label for="province">連絡先番号 <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_person_contact_number"
-                                        name="update_person_contact_number" placeholder="Contact Number">
+                                        name="update_person_contact_number" placeholder="連絡先番号">
                                 </div>
                             </div>
 
@@ -384,15 +383,15 @@
                                 <div class="form-group">
                                     <label for="city">Email <span style="color:red"> * </span></label>
                                     <input type="text" class="form-control " id="update_person_email"
-                                        name="update_person_email" placeholder="Email">
+                                        name="update_person_email" placeholder="電子メール">
                                 </div>
                             </div>
                         </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">変更を保存する</button>
                 </div>
                 </form>
             </div>
@@ -413,7 +412,7 @@
             "processing": true,
             "serverSide": true,
             "language": {
-                "sSearch": "Search Company Name:"
+                "sSearch": "会社名を検索する:"
             },
             "ajax": {
                 "url": '{{ route('get-company') }}',
@@ -433,9 +432,6 @@
                 },
                 {
                     "data": "company_name"
-                },
-                {
-                    "data": "vat_number"
                 },
                 {
                     "data": "email"
@@ -560,7 +556,7 @@
         //SHOW ADD NEW company TYPE MODAL
         const showModalAdd = () => {
             $("#add_company_forms").validate().resetForm();
-            $("#add_company_modal").find(".modal-header > h5").text("Add New company").end()
+            $("#add_company_modal").find(".modal-header > h5").text("新しい会社を追加 ").end()
                 .modal('show');
 
 
@@ -654,21 +650,21 @@
                     "add_department_multiselect[]": "required",
                 },
                 messages: {
-                    add_company_name: "Please enter company name",
-                    company_name_acronym: "Please enter company acronym",
-                    add_vat_number: "Please enter vat number",
-                    add_email: "Please enter email",
-                    add_address: "Please enter address",
-                    add_contact_number: "Please enter contact number",
-                    add_tel_number: "Please enter tel number",
-                    add_emp_num: "Please enter employee number",
-                    add_first_name: "Please enter first name",
-                    add_middle_name: "Please enter middle name",
-                    add_last_name: "Please enter last name",
-                    add_person_address: "Please enter home address",
-                    add_person_contact_number: "Please enter contact number",
-                    add_person_email: "Please enter email",
-                    "add_department_multiselect[]": "Please enter department",
+                    add_company_name: "会社名を入力してください",
+                    company_name_acronym: "会社の略称を入力してください",
+                    add_vat_number: "VAT番号を入力してください",
+                    add_email: "メールアドレスを入力してください",
+                    add_address: "住所の入力をしてください",
+                    add_contact_number: "連絡先番号を入力してください",
+                    add_tel_number: "電話番号を入力してください",
+                    add_emp_num: "従業員番号を入力してください",
+                    add_first_name: "名を入力してください",
+                    add_middle_name: "ミドルネームを入力してください",
+                    add_last_name: "姓を入力してください",
+                    add_person_address: "自宅の住所を入力してください",
+                    add_person_contact_number: "連絡先番号を入力してください",
+                    add_person_email: "メールアドレスを入力してください",
+                    "add_department_multiselect[]": "部門を入力してください",
                 },
                 onfocusout: function(e) {
                     this.element(e);
@@ -694,13 +690,14 @@
                 submitHandler: function(form) {
 
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
+                        title: '実行しますか？',
+                        text: "元に戻すことはできません",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Save it!',
+                        cancelButtonText: "キャンセル",   
+                        confirmButtonText: 'はい。実行します',
                         //footer: '<a href = "mailto: jvn-cgs.com">Send an email to us!</a>'
                     }).then((result) => {
                         if (result.value) {
@@ -736,22 +733,22 @@
                                             'hide');
 
                                         swal.fire({
-                                            title: "Saved!",
-                                            text: "Successfully!",
+                                            title: "保存をします。",
+                                            text: "正常に追加されました!",
                                             icon: 'success',
                                             type: "success",
-                                            html: "<b>New company information has been successfully saved.",
+                                            html: "<b>新しい会社情報が正常に保存されました。",
                                             // footer: '<a href = "mailto: enterprise.cabuyao@gmail.com">Send an email to us!</a>'
                                         });
 
 
                                     } else {
                                         swal.fire({
-                                            title: "Oops! something went wrong.",
+                                            title: "入力に間違いがあります。",
                                             icon: "error",
                                             html: "<b>" + data
                                                 .messages +
-                                                "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                                "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                                             type: "error",
                                             footer: ''
                                         });
@@ -760,9 +757,9 @@
                                 error: function(jqXHR, textStatus,
                                     errorThrown) {
                                     swal.fire({
-                                        title: "Oops! something went wrong.",
+                                        title: "入力に間違いがあります。",
                                         html: "<b>" + errorThrown +
-                                            "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                            "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                                         type: "error",
                                         footer: ''
                                     });
@@ -798,20 +795,20 @@
                     "update_department_multiselect[]": "required",
                 },
                 messages: {
-                    update_company_name: "Please enter company name",
-                    update_vat_number: "Please enter vat number",
-                    update_email: "Please enter email",
-                    update_address: "Please enter address",
-                    update_contact_number: "Please enter contact number",
-                    update_tel_number: "Please enter telephone number",
-                    update_emp_num: "Please enter employee number",
-                    update_first_name: "Please enter first name",
-                    update_middle_name: "Please enter middle name",
-                    update_last_name: "Please enter last name",
-                    update_person_address: "Please enter home address",
-                    update_person_contact_number: "Please enter contact number",
-                    update_person_email: "Please enter email",
-                    "update_department_multiselect[]": "Please enter departments",
+                    update_company_name: "会社名を入力してください",
+                    update_vat_number: "VAT番号を入力してください",
+                    update_email: "メールアドレスを入力してください",
+                    update_address: "住所の入力をしてください",
+                    update_contact_number: "連絡先番号を入力してください",
+                    update_tel_number: "電話番号を入力してください",
+                    update_emp_num: "従業員番号を入力してください",
+                    update_first_name: "名を入力してください",
+                    update_middle_name: "ミドルネームを入力してください",
+                    update_last_name: "姓を入力してください",
+                    update_person_address: "自宅の住所を入力してください",
+                    update_person_contact_number: "連絡先番号を入力してください",
+                    update_person_email: "メールアドレスを入力してください",
+                    "add_department_multiselect[]": "部門を入力してください",
                 },
                 onfocusout: function(e) {
                     this.element(e);
@@ -837,18 +834,20 @@
                 submitHandler: function(form) {
                     //EVENT FOR SAVING
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
+                        title: '実行しますか？',
+                        text: "元に戻すことはできません",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Update it!',
+                        cancelButtonText: "キャンセル",   
+                        confirmButtonText: '更新します。',
                         //footer: '<a href = "mailto: jvn-cgs.com">Send an email to us!</a>'
                     }).then((result) => {
                         if (result.value) {
 
-                            var formData = new FormData($("#update_company_forms").get(0));
+                            var formData = new FormData($("#update_company_forms").get(
+                                0));
 
                             $.ajax({
                                 url: '/update-company-info',
@@ -863,29 +862,36 @@
                                 },
                                 success: function(data) {
                                     if (data.success) {
-                                        $('#update_company_modal').modal('hide');
-                                        $("#update_company_forms")[0].reset();
-                                        var form = $("#update_company_forms");
+                                        $('#update_company_modal').modal(
+                                            'hide');
+                                        $("#update_company_forms")[0]
+                                            .reset();
+                                        var form = $(
+                                            "#update_company_forms");
                                         form.validate().resetForm();
-                                        form.find(".error").removeClass("error");
-                                        form.find(".form-control").removeClass(
-                                            "is-valid");
-                                        $('#update_company_modal').modal('hide');
+                                        form.find(".error").removeClass(
+                                            "error");
+                                        form.find(".form-control")
+                                            .removeClass(
+                                                "is-valid");
+                                        $('#update_company_modal').modal(
+                                            'hide');
                                         swal.fire({
-                                            title: "Updated!",
-                                            text: "Successfully Update!",
+                                            title: "更新されました！",
+                                            text: "更新に成功しました。",
                                             icon: 'success',
                                             type: "success",
-                                            html: "<b>Company details has been successfully updated.",
+                                            html: "<b>会社詳細が正常に更新されました。",
                                             // footer: '<a href = "mailto: enterprise.cabuyao@gmail.com">Send an email to us!</a>'
                                         });
-                                        
+
                                         table.ajax.reload(null, false);
                                     } else {
                                         Swal.fire({
-                                            title: "Oops! something went wrong.",
-                                            html: "<b>" + data.messages +
-                                                "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                            title: "入力に間違いがあります。",
+                                            html: "<b>" + data
+                                                .messages +
+                                                "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                                             type: "error",
                                             icon: "error",
                                             footer: ''
@@ -893,11 +899,12 @@
                                         table.ajax.reload(null, false);
                                     }
                                 },
-                                error: function(jqXHR, textStatus, errorThrown) {
+                                error: function(jqXHR, textStatus,
+                                    errorThrown) {
                                     swal.fire({
-                                        title: "Oops! something went wrong.",
+                                        title: "入力に間違いがあります。",
                                         html: "<b>" + errorThrown +
-                                            "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                            "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                                         type: "error",
                                         footer: ''
                                     });
@@ -931,7 +938,7 @@
                     if (data.success) {
                         $('#update_company_modal')
                             .find('.modal-header > h5')
-                            .text("Edit Company Details").end()
+                            .text("会社詳細の編集").end()
                             .modal('show');
 
                         $('#update_id').val(data.company_profile.id);
@@ -960,9 +967,9 @@
 
                     } else {
                         Swal.fire({
-                            title: "Oops! something went wrong.",
+                            title: "入力に間違いがあります。",
                             html: "<b>" + data.messages +
-                                "! <br>An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact us if the problem persists.</b>",
+                                "! <br>予期しないエラーが発生しました。ページの更新をお願い致します。問題が解決しない場合は、管理者までお問い合わせください。</b>",
                             type: "error",
                             icon: "error",
                             footer: ''
@@ -971,7 +978,7 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     swal.fire({
-                        title: "Oops! something went wrong.",
+                        title: "入力に間違いがあります。",
                         text: errorThrown,
                         icon: 'success'
                     })
@@ -988,13 +995,14 @@
         const removeCompanyRecord = (id) => {
             // const url = '{{ route('get-drivers') }}';
             Swal.fire({
-                title: 'Remove Data?',
+                title: 'データを削除しますか?',
                 icon: 'warning',
-                text: "You won't be able to revert this!",
+                text: "元に戻すことはできません",
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Restore it!'
+                cancelButtonText: "キャンセル",   
+                confirmButtonText: 'はい、取り外してください！'
             }).then((result) => {
                 if (result.value) {
                     //process loader true
@@ -1011,13 +1019,13 @@
                             if (data.success) {
                                 table.ajax.reload(null, false);
                                 Swal.fire({
-                                    title: "Save!",
-                                    text: "Deleted Successfully!",
+                                    title: "削除されました！",
+                                    text: "正常に削除されました!",
                                     icon: "success"
                                 });
                             } else {
                                 Swal.fire({
-                                    title: "Oops! something went wrong.",
+                                    title: "入力に間違いがあります。",
                                     text: data.messages,
                                     icon: 'success'
                                 })
@@ -1025,7 +1033,7 @@
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             swal.fire({
-                                title: "Oops! something went wrong.",
+                                title: "入力に間違いがあります。",
                                 text: errorThrown,
                                 icon: 'success'
                             })
